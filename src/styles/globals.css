@@ -1,0 +1,105 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/* End Reset */
+
+:root{
+  /* primary colours */
+  --pink: #AC37D5;
+  --darkPink: #6C2385;
+  --blue: #30B6BE;
+  --darkBlue: #1F7379;
+  --purple: #776ECC;
+  --darkPurple: #4D4786;
+  /* greyscale */
+  --dark: #212121;
+  --white: #fff;
+  --light: #F5F6F6;
+  --grey-one: #DCDDDD;
+  /* utility */
+  --success: #3DA73D;
+  --error:  #CE2323;
+  --warning: #FFD445;
+}
+
+/* Header Global */
+body{
+  font-family: Inter;
+}
+header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  max-width: 1200px;
+  margin: auto;
+}
+header > img{
+  max-width: 150px;
+  height:auto;
+}
+.navItem{
+  color: var(--dark);
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration:none;
+  transition: all 0.2s ease-in-out;
+}
+.navItem:hover{
+  opacity: 0.7;
+}
+
+/* Text */
+h1, h2, h3, h4, h5, p, li {
+  color: var(--dark);
+}
+h1{
+  font-size: 48px;
+  line-height: 56px;
+  font-weight: 700;
+}
