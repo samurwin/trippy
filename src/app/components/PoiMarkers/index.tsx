@@ -42,6 +42,14 @@ const PoiMarkers = (props: {pois: Poi[]}) => {
     });
   };
 
+  // click listener for map markers
+  const handleClick = useCallback((ev: google.maps.MapMouseEvent) => {
+    if(!map) return;
+    if(!ev.latLng) return;
+    console.log('marker clicked:', ev.latLng.toString());
+    map.panTo(ev.latLng);
+  }, [map]);
+
   return (
     <>
       {props.pois.map( (poi: Poi) => (
@@ -49,6 +57,8 @@ const PoiMarkers = (props: {pois: Poi[]}) => {
           key={poi.key}
           position={poi.location}
           ref={marker => setMarkerRef(marker, poi.key)}
+          clickable={true}
+          onClick={handleClick}
         >    
           <Pin background={'#30B6BE'} glyphColor={'#000'} borderColor={'#000'} />
         </AdvancedMarker>

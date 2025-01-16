@@ -1,11 +1,9 @@
 'use client';
 import PoiMarkers from '../../components/PoiMarkers';
-import React, {useEffect, useState, useRef, useCallback} from 'react';
-import {createRoot} from "react-dom/client";
+import React from 'react';
 
 import {APIProvider, Map, MapCameraChangedEvent} from '@vis.gl/react-google-maps';
-import {MarkerClusterer} from '@googlemaps/markerclusterer';
-import type {Marker} from '@googlemaps/markerclusterer';
+
 const googleApiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
 const googleMapId = process.env.NEXT_PUBLIC_GOOGLE_MAP_ID
 
