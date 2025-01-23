@@ -61,6 +61,7 @@ table {
   --white: #fff;
   --light: #F5F6F6;
   --grey-one: #DCDDDD;
+  --grey-two: #464646;
   /* utility */
   --success: #3DA73D;
   --error:  #CE2323;
@@ -75,9 +76,11 @@ header{
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 24px;
   padding: 16px;
   max-width: 1200px;
   margin: auto;
+  background: #fff;
 }
 header > img{
   max-width: 150px;

@@ -1,0 +1,40 @@
+/* Layout */
+.tripLayoutCon{
+  display: flex;
+  flex-wrap: no-wrap;
+}
+.tripContentWrapper{
+  width: 120%;
+  background: var(--light);
+  height: 100vh;
+}
+.tripContentCon{
+  display: flex;
+}
+/* Side Bar */
+.sideBar{
+  height: 100vh;
+  padding: 24px 16px 16px 16px;
+  border-right: solid 1px var(--grey-one);
+  display:flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.subList{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.navLabel{
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--grey-two);
+}
+.navItem{
+  display: block;
+  text-decoration: none;
+  font-weight: medium;
+  font-size: 16px;
+  color: var(--dark);
+  margin-left: 8px;
+}
