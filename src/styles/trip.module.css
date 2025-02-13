@@ -2,23 +2,29 @@
 .tripLayoutCon{
   display: flex;
   flex-wrap: no-wrap;
+  background: var(--light);
 }
 .tripContentWrapper{
   width: 120%;
-  background: var(--light);
   height: 100vh;
 }
 .tripContentCon{
   display: flex;
 }
+.tripContent{
+  margin: 24px;
+  overflow-y: scroll;
+  width: 100%;
+}
 /* Side Bar */
 .sideBar{
-  height: 100vh;
+  height: 100%;
   padding: 24px 16px 16px 16px;
   border-right: solid 1px var(--grey-one);
   display:flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 48px;
+  width: fit-content;
 }
 .subList{
   display: flex;
@@ -37,4 +43,62 @@
   font-size: 16px;
   color: var(--dark);
   margin-left: 8px;
+  text-wrap: nowrap;
+}
+
+.navItem svg {
+  vertical-align: middle;
+  margin: 0 4px 4px 0;
+}
+
+/* Trip Header */
+.tripHeaderCon{
+  background-size: cover;
+  background-position: center;
+  padding: 64px 24px;
+  border-radius: 10px;
+  margin-bottom: 24px;
+}
+.tripHeaderCon h1{
+  color: var(--white);
+  text-shadow: 2px 2px 4px rgba(0,0,0, 0.75);
+}
+
+/* Explore */
+.expCatCon{
+  margin: 24px 0;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.expCategory{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 25%;
+}
+.expCatIcon{
+  padding: 8px;
+  background: var(--darkPurple);
+  border-radius: 50px;
+  color: #fff;
+  font-size: 18px;
+  text-align:center;
+  aspect-ratio: 1/1;
+}
+.expCatLabel{
+  font-size: 12px;
+}
+
+.exploreSearch{
+  width: 100%;
+  box-sizing: border-box;
+     -webkit-box-sizing:border-box;
+     -moz-box-sizing: border-box;
+  border: none;
+  font-size: 16px;
+  border-radius: 5px;
+  padding: 16px;
+
 }
