@@ -1,9 +1,13 @@
-import Image from "next/image";
+"use client"
+import { useState } from "react";
 import styles from "../styles/page.module.css";
 
 import Header from "./components/Header"
+import AutoCompleteSearch from "./components/AutoCompleteSearch"
 
 export default function Home() {
+  const [selectedPlace, setSelectedPlace] = useState<google.maps.places.PlaceResult | null>(null);
+
   return (
     <>
       <Header/>
@@ -11,7 +15,8 @@ export default function Home() {
           <section className={styles.hero}>
             <h1>Plan your trip</h1>
             <p className={styles.startPara}>Start by entering a destination such as a country or city.</p>
-            <input name="startLocation" type="text" placeholder="Ex. New York City" className={styles.startInput} />
+            <AutoCompleteSearch  onPlaceSelected={setSelectedPlace} />
+
           </section>
       </main>
     </>

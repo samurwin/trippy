@@ -60,7 +60,7 @@ const PoiMarkers = (props: {pois: Poi[]}) => {
           clickable={true}
           onClick={handleClick}
         >    
-          <Pin background={'#30B6BE'} glyphColor={'#000'} borderColor={'#000'} />
+          <Pin background={'#30B6BE'} glyphColor={'#000'} />
         </AdvancedMarker>
       ))}
     </>
