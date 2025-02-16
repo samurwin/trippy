@@ -3,17 +3,53 @@
   height: 100vh;
 }
 .hero{
-  padding: 120px 16px;
+  padding: 15vh 16px;
+}
+.hero h1{
   text-align: center;
 }
 .startPara{
   margin: 32px 0;
 }
-.startInput{
-  padding: 16px;
-  width:100%;
+
+.startForm{
+  margin-top: 24px !important;
   max-width: 500px;
+  margin: auto;
+}
+.startForm input{
+  margin-bottom: 16px;
+  text-align: left;
+}
+.dates{
+  display: flex; 
+  justify-content: space-between;
+}
+.dateInputCon{
+  text-align: left;
+}
+.dateInputCon label, .startForm label{
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 24px;
+}
+.startBtn{
+  padding: 16px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--pink), var(--darkPink));
   border: none;
+  color: var(--white);
   font-size: 16px;
   border-radius: 5px;
+  margin-top: 24px;
+  cursor: pointer;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.startBtn:hover{
+  opacity: 0.8;
+}
+
+.startBtn:disabled{
+  cursor: not-allowed;
 }

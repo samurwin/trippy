@@ -4,9 +4,12 @@ import styles from "../../../styles/page.module.css";
 
 interface AutoCompleteSearchProps {
   onPlaceSelected: (place: google.maps.places.PlaceResult | null) => void;
+  name: string;
+  label?: string;
+  placeholder?: string;
 }
 
-export default function AutoCompleteSearch({ onPlaceSelected }: AutoCompleteSearchProps) {
+export default function AutoCompleteSearch({ onPlaceSelected, name, label, placeholder}: AutoCompleteSearchProps) {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [inputValue, setInputValue] = useState("");
 
@@ -24,13 +27,21 @@ export default function AutoCompleteSearch({ onPlaceSelected }: AutoCompleteSear
   }, [onPlaceSelected]);
 
   return (
+    <>
+    {label ? 
+      <label htmlFor={name}>{label}</label>
+      : null}
+
     <input
+      name={name}
       ref={inputRef}
       type="text"
       value={inputValue}
       onChange={(e) => setInputValue(e.target.value)}
-      placeholder="Enter a location..."
+      placeholder={placeholder || 'Enter a location'}
       className={styles.startInput}
     />
+    </>
+
   );
 }

@@ -71,18 +71,22 @@ table {
 /* Header Global */
 body{
   font-family: Inter;
+  background: var(--light);
 }
 header{
+  padding: 16px;
+  background: #fff;
+}
+header > div {
+  max-width: 1200px;
+  margin: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 24px;
-  padding: 16px;
-  max-width: 1200px;
-  margin: auto;
-  background: #fff;
 }
-header > img{
+
+header > div > img{
   max-width: 150px;
   height:auto;
 }
@@ -110,4 +114,14 @@ h2{
   font-size: 36px;
   line-height: 44px;
   font-weight: 700;
+}
+input{
+  padding: 16px;
+  width:100%;
+  border: none;
+  font-size: 16px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing: border-box;
 }
