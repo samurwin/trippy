@@ -11,6 +11,7 @@
   "dependencies": {
     "@googlemaps/markerclusterer": "^2.5.3",
     "@vis.gl/react-google-maps": "^1.4.0",
+    "cookies-next": "^4.3.0",
     "js-marker-clusterer": "github:googlemaps/markerclusterer",
     "next": "14.2.5",
     "react": "^18",

@@ -1,7 +1,10 @@
 "use client"
 import { useState, useEffect } from "react";
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
+import { setCookie } from 'cookies-next';
+
 import styles from "../styles/page.module.css";
+import { tripData } from "../../types"
 
 import Header from "./components/Header"
 import AutoCompleteSearch from "./components/AutoCompleteSearch"
@@ -14,10 +17,9 @@ interface FormData {
 
 export default function Home() {
   const date = new Date();
+  const router = useRouter()
 
-  // form data
   const [formData, setFormData] = useState<FormData>({location: null, start: '', end: ''})
-  // is form filled out
   const [isFormValid, setIsFormValid] = useState(false);
 
   // check if all fields are filled
@@ -31,16 +33,33 @@ export default function Home() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
-  // on submit
+  // on submit save trip data to cookie
   function startTrip(e: React.FormEvent<HTMLFormElement>){
     e.preventDefault();
-    console.log( "start: " + formData.start + "end: " + formData.end)
-    if (formData.location) {
-      const { formatted_address, geometry } = formData.location;
-      const lat = geometry?.location?.lat ? geometry.location.lat() : null;
-      const lng = geometry?.location?.lng ? geometry.location.lng() : null;
-      console.log("Address:", formatted_address, "Lat:", lat, "Lng:", lng);
+    let tripPhoto = ''
+    if(formData.location?.photos){
+      tripPhoto = formData.location.photos[0].getUrl();
     }
+    let tripData:tripData = {
+      id: "abc123",
+      tripPhoto: tripPhoto,
+      tripName: "Trip to " + formData.location?.name,
+      startDate: formData.start,
+      endDate: formData.end
+    }
+    if(formData.location?.geometry?.location){
+      tripData = {
+        ...tripData,
+        centerMap: {
+          lat: formData.location?.geometry.location.lat(),
+          lng: formData.location?.geometry?.location?.lng() 
+        }
+      }
+    }
+    console.log(tripData);
+    setCookie('tripData', JSON.stringify(tripData),{ maxAge: 60 * 60 * 24, })
+
+    router.push(`/trip/${tripData.id}/explore`)
   }
 
   return (
