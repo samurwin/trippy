@@ -86,6 +86,10 @@ header > div {
   gap: 24px;
 }
 
+button{
+  cursor: pointer;
+}
+
 header > div > img{
   max-width: 150px;
   height:auto;

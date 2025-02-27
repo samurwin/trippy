@@ -1,25 +1,18 @@
+"use client"
+import { TripProvider } from './TripContext'
 import TripMap from './TripMap'
 import Header from '../../components/Header';
 import SideBar from '../../components/SideBar'
-import TripHeader from '../../components/TripHeader'
-import { tripData } from "../../../../types"
 import styles from '../../../styles/trip.module.css'
 
-import { cookies } from 'next/headers';
-import { getCookie } from 'cookies-next'
+import { getCookie } from 'cookies-next';
+import { APIProvider } from '@vis.gl/react-google-maps';
 
-const exampleTripData = {
-  id: '123',
-  tripName: "Trip Name",
-  tripPhoto: 'https://images.unsplash.com/photo-1539037116277-4db20889f2d4?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  startDate: '2025-01-01',
-  endDate: '2025-01-07'
-}
-
+const googleApiKey : any = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
 
 export default function TripLayout({ children }: Readonly<{  children: React.ReactNode; }>){
-  const cookieStore = cookies();
-  const tripData = cookieStore.get("tripData")?.value;
+
+  const tripData = getCookie("tripData");
 
   let trip = null;
   if (tripData) {
@@ -29,19 +22,18 @@ export default function TripLayout({ children }: Readonly<{  children: React.Rea
       console.error("Error parsing tripData cookie:", error);
     }
   }
-  
 
   return (
-    <div className={styles.tripLayoutCon}>
+    <APIProvider apiKey={googleApiKey} onLoad={() => console.log('Maps API has loaded.')}>
+    <TripProvider tripData={trip}>
+      <div className={styles.tripLayoutCon}>
         <div className={styles.tripContentWrapper}>
           <Header/>
-          
           <div className={styles.tripContentCon}>
-            <SideBar />
+            <SideBar tripId={trip?.id || ''}/>
             <div className={styles.tripContent}>
               {trip ?(
                 <>
-                  <TripHeader tripName={trip.tripName} tripImg={trip.tripPhoto} />
                   <main>{children}</main>
                 </>
               ):(
@@ -51,6 +43,8 @@ export default function TripLayout({ children }: Readonly<{  children: React.Rea
           </div>
         </div>
         <TripMap defaultCenter={trip?.centerMap ? trip.centerMap : ''}/>
-    </div>
+      </div>
+    </TripProvider>  
+    </APIProvider>
   )
 }

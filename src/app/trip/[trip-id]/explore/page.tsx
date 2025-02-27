@@ -1,12 +1,34 @@
-import styles from '../../../../styles/trip.module.css'
+"use client"
+import { useState, useEffect } from 'react'
+import { useTrip } from '../TripContext';
+import styles from '@/styles/trip.module.css'
+import AutoCompleteSearch from '@/app/components/AutoCompleteSearch';
+import TripHeader from '../../../components/TripHeader'
+import { formatDate } from '../../../../utils'
 
 import { FaCocktail } from "react-icons/fa";
 import { FaUtensils, FaMapPin } from "react-icons/fa6";
 import { MdHotel, MdDirectionsTransit } from "react-icons/md";
 
+import { useMap } from '@vis.gl/react-google-maps'
 
 export default function Explore(){
+  const { tripData } = useTrip();
+  const map = useMap();
+  const [location, setLocation] = useState<google.maps.places.PlaceResult | null>(null)
+
+  useEffect(() => {
+    if(!map) return
+
+    console.log("explore search")
+    console.log(location)
+
+  },[map, location])
   return(
+    <>
+    {tripData ?
+      <TripHeader tripID={tripData.id} tripName={tripData.tripName} tripImg={tripData.tripPhoto} tripDate={formatDate(tripData.startDate, tripData.endDate)} />
+    : null}
     <section>
       <h2>Explore</h2>
 
@@ -40,9 +62,10 @@ export default function Explore(){
 
       {/* Explore Search Bar */}
       <div>
-        <input name="explore" type="text" placeholder="Search for a location" className={styles.exploreSearch}/>
+        <AutoCompleteSearch onPlaceSelected={setLocation} name="exploreSearch" placeholder="Search for a place" />
       </div>
       
     </section>
+    </>
   )
 }

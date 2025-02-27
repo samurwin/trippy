@@ -4,12 +4,12 @@ import styles from '../../../styles/trip.module.css'
 import { MdOutlineExplore, MdFormatListBulleted, MdOutlineCalendarMonth, MdOutlineMap, MdOutlineStar } from "react-icons/md";
 import { FaPlus } from "react-icons/fa6";
 
-export default function SideBar(){
+export default function SideBar(props:{ tripId:string }){
   return(
     <div className={styles.sideBar}>
       <div className={styles.subList}>
         <span className={styles.navLabel}>Trip</span>
-          <Link href="" className={styles.navItem}>Trip Info</Link>
+          <Link href={props.tripId ? `/trip/${props.tripId}/trip-info`: ''} className={styles.navItem}>Trip Info</Link>
           <Link href="" className={styles.navItem}>Packing Lists</Link>
           <Link href="" className={styles.navItem}>Documents</Link>
       </div>

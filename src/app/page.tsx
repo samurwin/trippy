@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from 'next/navigation'
 import { setCookie } from 'cookies-next';
 
@@ -7,7 +7,6 @@ import styles from "../styles/page.module.css";
 import { tripData } from "../../types"
 
 import Header from "./components/Header"
-import AutoCompleteSearch from "./components/AutoCompleteSearch"
 
 interface FormData {
   location: google.maps.places.PlaceResult | null;
@@ -22,10 +21,26 @@ export default function Home() {
   const [formData, setFormData] = useState<FormData>({location: null, start: '', end: ''})
   const [isFormValid, setIsFormValid] = useState(false);
 
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const [inputValue, setInputValue] = useState("");
+
   // check if all fields are filled
   useEffect(() => {
     setIsFormValid(formData.location !== null && formData.end.trim() !== '' && formData.start.trim() !== '');
   }, [formData]);
+
+  useEffect(() => {
+    if (!window.google || !inputRef.current) return;
+
+    const autocomplete = new google.maps.places.Autocomplete(inputRef.current);
+
+    autocomplete.addListener("place_changed", () => {
+      const place = autocomplete.getPlace();
+      setInputValue(place.formatted_address || "");
+      console.log(place)
+      setFormData({...formData, location: place});
+    });
+  }, [setFormData]);
 
   // handle input change
   function handleChange(e: React.ChangeEvent<HTMLInputElement>){
@@ -43,7 +58,8 @@ export default function Home() {
     let tripData:tripData = {
       id: "abc123",
       tripPhoto: tripPhoto,
-      tripName: "Trip to " + formData.location?.name,
+      tripName: formData.location?.name ? "Trip to " + formData.location?.name : "Trip to " + formData.location?.formatted_address,
+      centerId: formData.location?.place_id,
       startDate: formData.start,
       endDate: formData.end
     }
@@ -69,15 +85,15 @@ export default function Home() {
           <section className={styles.hero}>
             <h1>Start Planning your Trip</h1>
             <form id="startPlanning" className={styles.startForm} onSubmit={startTrip} >
-              <AutoCompleteSearch  
-              name={"location"} 
-              placeholder={"Enter a city or country"} 
-              label={"Location"} 
-              onPlaceSelected={(place) =>
-                setFormData((prev) => ({
-                  ...prev,
-                  location: place, 
-                }))}
+              <label htmlFor={"location"}>Location</label>
+              <input
+                name={"location"}
+                ref={inputRef}
+                type="text"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                placeholder={'Enter a location'}
+                className={styles.startInput}
               />
               <div className={styles.dates}>
                 <div className={styles.dateInputCon}>

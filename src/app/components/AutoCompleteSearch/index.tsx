@@ -1,22 +1,41 @@
 'use client'
 import { useEffect, useRef, useState } from "react";
 import styles from "../../../styles/page.module.css";
+import { useMapsLibrary, useMap } from '@vis.gl/react-google-maps';
 
 interface AutoCompleteSearchProps {
   onPlaceSelected: (place: google.maps.places.PlaceResult | null) => void;
   name: string;
   label?: string;
   placeholder?: string;
+  locationBias?: {
+    lat: number,
+    lng: number
+  }
 }
 
-export default function AutoCompleteSearch({ onPlaceSelected, name, label, placeholder}: AutoCompleteSearchProps) {
+export default function AutoCompleteSearch({ onPlaceSelected, name, label, placeholder, locationBias}: AutoCompleteSearchProps) {
+  const map = useMap();
+
+  const placesLibrary = useMapsLibrary('places');
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
-    if (!window.google) return;
+    if (!window.google || !placesLibrary || !map) return;
 
-    const autocomplete = new google.maps.places.Autocomplete(inputRef.current!);
+    const options: google.maps.places.AutocompleteOptions = {
+      fields: ["formatted_address", "geometry"],
+      strictBounds: false, 
+      ...(locationBias && {
+        bounds: new google.maps.LatLngBounds(
+          new google.maps.LatLng(locationBias.lat - 1, locationBias.lng - 1), 
+          new google.maps.LatLng(locationBias.lat + 1, locationBias.lng + 1) 
+        ),
+      }),
+    };
+
+    const autocomplete = new placesLibrary.Autocomplete(inputRef.current!, options);
 
     autocomplete.addListener("place_changed", () => {
       const place = autocomplete.getPlace();
@@ -24,7 +43,7 @@ export default function AutoCompleteSearch({ onPlaceSelected, name, label, place
       onPlaceSelected(place);
     });
 
-  }, [onPlaceSelected]);
+  }, [onPlaceSelected, locationBias, map, placesLibrary]);
 
   return (
     <>
