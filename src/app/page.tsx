@@ -79,7 +79,7 @@ export default function Home() {
   }
 
   return (
-    <>
+    <div>
       <Header/>
       <main className={styles.homeMain}>
           <section className={styles.hero}>
@@ -110,7 +110,7 @@ export default function Home() {
 
           </section>
       </main>
-    </>
+    </div>
 
   );
 }

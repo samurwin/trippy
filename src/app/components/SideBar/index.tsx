@@ -15,7 +15,7 @@ export default function SideBar(props:{ tripId:string }){
       </div>
 
       <div>
-        <Link href="" className={styles.navItem}>
+        <Link href={props.tripId ? `/trip/${props.tripId}/explore` : ''} className={styles.navItem}>
           <MdOutlineExplore />
           Explore
         </Link>

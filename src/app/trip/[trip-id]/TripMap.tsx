@@ -21,9 +21,6 @@ export default function TripMap({ defaultCenter }:TripMapProps) {
           mapId={googleMapId}
           defaultZoom={12}
           defaultCenter={ defaultCenter ? defaultCenter : undefined }
-          onCameraChanged={ (ev: MapCameraChangedEvent) =>
-            console.log('camera changed:', ev.detail.center, 'zoom:', ev.detail.zoom)
-          }
           >
             {locations ? 
               <PoiMarkers pois={locations} />

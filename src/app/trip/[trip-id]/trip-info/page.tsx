@@ -3,24 +3,26 @@ import styles from '../../../../styles/trip.module.css'
 import { useTrip } from '../TripContext';
 import { useState, useEffect, useRef } from 'react'
 import {useMap, useMapsLibrary} from '@vis.gl/react-google-maps';
+import { tripData } from '../../../../../types';
+import { setCookie } from 'cookies-next';
 
 export default function TripInfo(){
   const date = new Date();
-  const { tripData } = useTrip();
+  const { trip, setTrip } = useTrip();
   const placesLibrary = useMapsLibrary('places');
   const map = useMap();
 
   // trip info relevant to this page
-  const [tripInfo, setTripInfo] = useState({tripName: tripData?.tripName, end: tripData?.endDate, start: tripData?.startDate, photo: tripData?.tripPhoto })
+  const [tripInfo, setTripInfo] = useState({tripName: trip?.tripName, end: trip?.endDate, start: trip?.startDate, photo: trip?.tripPhoto })
 
   // default trip location's google maps photos
   const [locationPhotos, setLocationPhotos] = useState<google.maps.places.PlacePhoto[]>([]);
 
   // get photos for the trip's location for options to change trip photo
   useEffect(() => {
-    if(!tripData?.centerId || !placesLibrary || !map) return;
+    if(!trip?.centerId || !placesLibrary || !map) return;
     const request = {
-      placeId: tripData.centerId,
+      placeId: trip.centerId,
       fields: ["name", "photos"]
     }
       new placesLibrary.PlacesService(map).getDetails(request, (place, status) => {
@@ -28,7 +30,7 @@ export default function TripInfo(){
           setLocationPhotos(place.photos);
         }
       })
-  },[placesLibrary, map, tripData])
+  },[placesLibrary, map, trip])
  
 
   // change on name and date inputs
@@ -39,10 +41,14 @@ export default function TripInfo(){
 
   // choose a new trip photo
   const[showPhotoList, setShowPhotoList] = useState(false);
-  const chooseNewPhoto = useRef() as React.MutableRefObject<HTMLInputElement>;
+  let selectedPhoto = '';
+
+  function selectPhoto(e: React.ChangeEvent<HTMLInputElement>){
+    e.preventDefault();
+    selectedPhoto = e.target.value;
+  }
 
   function changePhoto(){
-    const selectedPhoto = chooseNewPhoto.current.checked ? chooseNewPhoto.current.value: '';
     if(selectedPhoto){
       console.log("here")
       setTripInfo({...tripInfo, photo: selectedPhoto});
@@ -50,13 +56,21 @@ export default function TripInfo(){
     setShowPhotoList(false);
   }
   // On form submit set updated trip info as new values
-  // update the cookie || database to reflect new trip info
+  // update the cookie and context to reflect new trip info
+  function saveTripData(e: React.FormEvent<HTMLFormElement>){
+    e.preventDefault();
+    const updatedTrip = { ...trip, ...tripInfo };
+
+    setTrip(updatedTrip);
+    setCookie('tripData', JSON.stringify(updatedTrip),{ maxAge: 60 * 60 * 24, })
+    window.alert("Saved Trip Info")
+  }
 
   return (
     <section>
       <h2>Trip Info</h2>
       <div>
-        <form className={styles.tripDetailsForm}>
+        <form className={styles.tripDetailsForm} onSubmit={saveTripData}>
           <label htmlFor="tripName">Trip Name</label>
           <input name="tripName" className={styles.tripDetailInput} type="text" value={tripInfo.tripName} onChange={handleChange}/>
           <label htmlFor="start">Start Date</label>
@@ -81,8 +95,8 @@ export default function TripInfo(){
               {
                 locationPhotos.map((photo, i) => (
                   <div className={styles.locationPhoto} key={i + "photoList"}>
-                    <input type="radio" className={styles.photoRadio} value={photo.getUrl()} ref={chooseNewPhoto} />
-                    <img src={photo.getUrl()}  />
+                    <input type="radio" className={styles.photoRadio} value={photo.getUrl()} onChange={selectPhoto}/>
+                    <img src={photo.getUrl()} />
                   </div>
                 ))
               }

@@ -13,21 +13,18 @@ import { MdHotel, MdDirectionsTransit } from "react-icons/md";
 import { useMap } from '@vis.gl/react-google-maps'
 
 export default function Explore(){
-  const { tripData } = useTrip();
+  const { trip } = useTrip();
   const map = useMap();
   const [location, setLocation] = useState<google.maps.places.PlaceResult | null>(null)
 
-  useEffect(() => {
-    if(!map) return
+  // useEffect(() => {
+  //   if(!map) return
 
-    console.log("explore search")
-    console.log(location)
-
-  },[map, location])
+  // },[map, location])
   return(
     <>
-    {tripData ?
-      <TripHeader tripID={tripData.id} tripName={tripData.tripName} tripImg={tripData.tripPhoto} tripDate={formatDate(tripData.startDate, tripData.endDate)} />
+    {trip ?
+      <TripHeader tripID={trip.id} tripName={trip.tripName} tripImg={trip.tripPhoto} tripDate={formatDate(trip.startDate, trip.endDate)} />
     : null}
     <section>
       <h2>Explore</h2>

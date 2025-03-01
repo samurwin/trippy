@@ -1,9 +1,11 @@
 "use client"
-import { TripProvider } from './TripContext'
+import TripContext  from './TripContext'
 import TripMap from './TripMap'
 import Header from '../../components/Header';
 import SideBar from '../../components/SideBar'
 import styles from '../../../styles/trip.module.css'
+import { useState } from 'react'
+import { tripData } from '../../../../types'
 
 import { getCookie } from 'cookies-next';
 import { APIProvider } from '@vis.gl/react-google-maps';
@@ -12,20 +14,14 @@ const googleApiKey : any = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
 
 export default function TripLayout({ children }: Readonly<{  children: React.ReactNode; }>){
 
-  const tripData = getCookie("tripData");
+  const tripCookie = getCookie("tripData");
 
-  let trip = null;
-  if (tripData) {
-    try {
-      trip = JSON.parse(tripData);
-    } catch (error) {
-      console.error("Error parsing tripData cookie:", error);
-    }
-  }
+  const [trip, setTrip] = useState<tripData>(JSON.parse(tripCookie!));
+  const value = {trip, setTrip};
 
   return (
     <APIProvider apiKey={googleApiKey} onLoad={() => console.log('Maps API has loaded.')}>
-    <TripProvider tripData={trip}>
+    <TripContext.Provider value={value}>
       <div className={styles.tripLayoutCon}>
         <div className={styles.tripContentWrapper}>
           <Header/>
@@ -42,9 +38,9 @@ export default function TripLayout({ children }: Readonly<{  children: React.Rea
             </div>
           </div>
         </div>
-        <TripMap defaultCenter={trip?.centerMap ? trip.centerMap : ''}/>
+        <TripMap defaultCenter={trip?.centerMap ? trip.centerMap : undefined}/>
       </div>
-    </TripProvider>  
+    </TripContext.Provider>  
     </APIProvider>
   )
 }
