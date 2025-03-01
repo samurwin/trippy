@@ -15,12 +15,19 @@ import { useMap } from '@vis.gl/react-google-maps'
 export default function Explore(){
   const { trip } = useTrip();
   const map = useMap();
+
+  // set photo if photo in trip data is updated
+  // const [photo, setPhoto] = useState(trip!.tripPhoto);
+  // useEffect(()=>{
+  //   setPhoto(trip!.tripPhoto);
+  // },[trip])
+
   const [location, setLocation] = useState<google.maps.places.PlaceResult | null>(null)
 
-  // useEffect(() => {
-  //   if(!map) return
-
-  // },[map, location])
+  useEffect(() => {
+    if(!map && !location) return
+    console.log('here')
+  },[map, location])
   return(
     <>
     {trip ?

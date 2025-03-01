@@ -50,7 +50,6 @@ export default function TripInfo(){
 
   function changePhoto(){
     if(selectedPhoto){
-      console.log("here")
       setTripInfo({...tripInfo, photo: selectedPhoto});
     }
     setShowPhotoList(false);
@@ -59,8 +58,9 @@ export default function TripInfo(){
   // update the cookie and context to reflect new trip info
   function saveTripData(e: React.FormEvent<HTMLFormElement>){
     e.preventDefault();
-    const updatedTrip = { ...trip, ...tripInfo };
-
+    const updatedTrip = { ...trip, tripPhoto: tripInfo.photo, startDate: tripInfo.start, endDate: tripInfo.end };
+    console.log(updatedTrip);
+    
     setTrip(updatedTrip);
     setCookie('tripData', JSON.stringify(updatedTrip),{ maxAge: 60 * 60 * 24, })
     window.alert("Saved Trip Info")
