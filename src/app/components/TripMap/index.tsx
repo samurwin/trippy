@@ -1,7 +1,6 @@
+import PoiMarkers from '../PoiMarkers';
 
-import PoiMarkers from '../../components/PoiMarkers';
-
-import {Map, MapCameraChangedEvent, useMap} from '@vis.gl/react-google-maps';
+import {Map, useMap} from '@vis.gl/react-google-maps';
 const googleMapId = process.env.NEXT_PUBLIC_GOOGLE_MAP_ID
 
 type Poi ={ key: string, location: google.maps.LatLngLiteral }
@@ -10,14 +9,16 @@ interface TripMapProps {
     lat: number,
     lng: number
   },
+  mapWidth?: string,
+  mapHeight?: string
 }
 
-export default function TripMap({ defaultCenter }:TripMapProps) {
+export default function TripMap({ defaultCenter, mapWidth, mapHeight }:TripMapProps) {
   const map = useMap();
   const locations = ''
   return(
       <Map
-          style={{width: '100vw', height: '100vh'}}
+          style={{width: mapWidth ? mapWidth : "0" , height: mapHeight ? mapHeight : "0"}}
           mapId={googleMapId}
           defaultZoom={12}
           defaultCenter={ defaultCenter ? defaultCenter : undefined }

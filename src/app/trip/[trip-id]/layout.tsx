@@ -1,6 +1,6 @@
 "use client"
 import TripContext  from './TripContext'
-import TripMap from './TripMap'
+import TripMap from '../../components/TripMap'
 import Header from '../../components/Header';
 import SideBar from '../../components/SideBar'
 import styles from '../../../styles/trip.module.css'
@@ -38,7 +38,7 @@ export default function TripLayout({ children }: Readonly<{  children: React.Rea
             </div>
           </div>
         </div>
-        <TripMap defaultCenter={trip?.centerMap ? trip.centerMap : undefined}/>
+        <TripMap defaultCenter={trip?.centerMap ? trip.centerMap : undefined} mapWidth="100vw" mapHeight="100vh" />
       </div>
     </TripContext.Provider>  
     </APIProvider>
