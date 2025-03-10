@@ -3,33 +3,51 @@ import styles from '../../../styles/trip.module.css'
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 
 interface PlaceResultCardProps {
-  place: google.maps.places.Place;
+  displayName: string | null | undefined,
+  primaryType: string | undefined | null,
+  priceLevel: string | number | undefined | null ,
+  rating: number | undefined | null,
+  regularOpeningHours: google.maps.places.OpeningHours | google.maps.places.PlaceOpeningHours | undefined | null,
+  photos: any,
+  formattedAddress: string | null | undefined
 }
 
-export default function PlaceResultCard({place}:PlaceResultCardProps){
+export default function PlaceResultCard({ displayName, primaryType, priceLevel, rating, regularOpeningHours, photos, formattedAddress }:PlaceResultCardProps){
 
   function formatType(primaryType:string){
-    let formattedType = '';
-    let typeArr = primaryType.split("_");
-    typeArr.forEach(str =>{
-      let newStr = str.charAt(0).toUpperCase() + str.substring(1);
-      formattedType = formattedType + newStr + ' ';
-    })
-    return formattedType
+    if(primaryType){
+      let formattedType = '';
+      let typeArr = primaryType.split("_");
+      typeArr.forEach(str =>{
+        let newStr = str.charAt(0).toUpperCase() + str.substring(1);
+        formattedType = formattedType + newStr + ' ';
+      })
+      return formattedType
+    }
   }
 
-  function displayPriceLevel(priceLevel:string){
+  function displayPriceLevel(priceLevel:string | number){
       switch(priceLevel){
         case 'FREE':
           return 'Free';
+        case 0: 
+          return 'Free';
         case 'INEXPENSIVE':
           return '$';
+        case 1:
+          return '$'
         case 'MODERATE':
+          return '$$';
+        case 2:
           return '$$';
         case 'EXPENSIVE':
           return '$$$';
+        case 3:
+          return '$$$';
         case 'VERY EXPENSIVE':
           return '$$$$';
+        case 4:
+          return '$$$$'
         default: return;
       }
   }
@@ -60,39 +78,49 @@ export default function PlaceResultCard({place}:PlaceResultCardProps){
     
   }
 
-  function displayHours(hours:google.maps.places.OpeningHours){
+  function displayHours(hours:any){
     const date = new Date;
     const day = date.getDay();
     if(hours){
-      if(day === 0){
-        return hours.weekdayDescriptions[6];
-      } else {
-        return hours.weekdayDescriptions[day - 1];
+      if(hours.weekdayDescriptions){
+        if(day === 0){
+          return hours.weekdayDescriptions[6];
+        } else {
+          return hours.weekdayDescriptions[day - 1];
+        }
+      } else if (hours.weekday_text){
+        if(day === 0){
+          return hours.weekday_text[6];
+        } else {
+          return hours.weekday_text[day - 1];
+        }
       }
+
     }
     else return;
 
   }
 
+
   return(
     <div className={styles.placeResultCard}>
-      {place.photos && place.photos[0] ? 
-            <div className={styles.placeResultImg} style={{backgroundImage: `url(${place.photos[0].getURI()})`}}></div>
+      {photos && photos[0] ? 
+            <div className={styles.placeResultImg} style={{backgroundImage: `url(${photos[0].getURL ? photos[0].getURL() : photos[0].getURI ? photos[0].getURI() : null})`}}></div>
       : null}
 
       <div className={styles.placeResultInfo}>
-        <p className={styles.placeName}>{place.displayName}</p>
+        <p className={styles.placeName}>{displayName}</p>
         <div className={styles.placeMetaData}>
-          <p className={styles.placeType}>{formatType(place.primaryType!)}</p>
-          <p className={styles.priceLevel}>{displayPriceLevel(place.priceLevel!)}</p>
+          <p className={styles.placeType}>{formatType(primaryType!)}</p>
+          <p className={styles.priceLevel}>{displayPriceLevel(priceLevel!)}</p>
           <p className={styles.rating}>
-            {displayStars(place.rating!)}
+            {displayStars(rating!)}
           </p>
           <p className={styles.hours}>
-            {displayHours(place.regularOpeningHours!)}
+            {displayHours(regularOpeningHours!)}
           </p>
         </div>
-        <p className={styles.address}>{place.formattedAddress}</p>
+        <p className={styles.address}>{formattedAddress}</p>
       </div>
     </div>
   )

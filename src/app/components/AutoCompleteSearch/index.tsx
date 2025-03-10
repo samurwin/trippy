@@ -25,7 +25,7 @@ export default function AutoCompleteSearch({ onPlaceSelected, name, label, place
     if (!window.google || !placesLibrary || !map) return;
 
     const options: google.maps.places.AutocompleteOptions = {
-      fields: ["formatted_address", "geometry"],
+      fields: ["name", "types", "price_level", "rating", "photos", "opening_hours",  "formatted_address", "geometry"],
       strictBounds: false, 
       ...(locationBias && {
         bounds: new google.maps.LatLngBounds(
@@ -39,7 +39,7 @@ export default function AutoCompleteSearch({ onPlaceSelected, name, label, place
 
     autocomplete.addListener("place_changed", () => {
       const place = autocomplete.getPlace();
-      setInputValue(place.formatted_address || ""); // Update input field
+      setInputValue(place.name || place.formatted_address || ""); // Update input field
       onPlaceSelected(place);
     });
 

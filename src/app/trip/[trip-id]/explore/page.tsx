@@ -24,6 +24,12 @@ export default function Explore(){
 
   },[map, locations])
 
+  useEffect(()=>{
+    if(!map && !autoComplete) return
+    console.log("---autocomplete---")
+    console.log(autoComplete)
+  }, [map, autoComplete])
+
   return(
     <>
     {trip ?
@@ -54,10 +60,30 @@ export default function Explore(){
           locations.map((location) => (
             <PlaceResultCard 
             key={location.id}
-            place={location}
+            displayName={location.displayName}
+            primaryType={location.primaryType}
+            priceLevel={location.priceLevel}
+            rating={location.rating}
+            regularOpeningHours={location.regularOpeningHours}
+            photos={location.photos}
+            formattedAddress={location.formattedAddress}
             />
           ))
         }
+      </section>
+    : null}
+
+    {autoComplete ? 
+      <section>
+        <PlaceResultCard
+        displayName={autoComplete.name}
+        primaryType={autoComplete.types ? autoComplete.types[0] : null}
+        priceLevel={autoComplete.price_level}
+        rating={autoComplete.rating}
+        regularOpeningHours={autoComplete.opening_hours}
+        photos={autoComplete.photos}
+        formattedAddress={autoComplete.formatted_address}
+        />
       </section>
     : null}
 
