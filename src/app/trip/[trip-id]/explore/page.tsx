@@ -2,13 +2,11 @@
 import { useState, useEffect } from 'react'
 import { useTrip } from '../TripContext';
 import styles from '@/styles/trip.module.css'
+import { formatDate } from '../../../../utils'
+import ExploreCategory from '@/app/components/ExploreCategory'
 import AutoCompleteSearch from '@/app/components/AutoCompleteSearch';
 import TripHeader from '../../../components/TripHeader'
-import { formatDate } from '../../../../utils'
-
-import { FaCocktail } from "react-icons/fa";
-import { FaUtensils, FaMapPin } from "react-icons/fa6";
-import { MdHotel, MdDirectionsTransit } from "react-icons/md";
+import PlaceResultCard from '../../../components/PlaceResultCard'
 
 import { useMap } from '@vis.gl/react-google-maps'
 
@@ -16,18 +14,16 @@ export default function Explore(){
   const { trip } = useTrip();
   const map = useMap();
 
-  // set photo if photo in trip data is updated
-  // const [photo, setPhoto] = useState(trip!.tripPhoto);
-  // useEffect(()=>{
-  //   setPhoto(trip!.tripPhoto);
-  // },[trip])
+  const [autoComplete, setAutoComplete] = useState<google.maps.places.PlaceResult | null>(null)
+  const [locations, setLocations] = useState<google.maps.places.Place[] | null>(null)
 
-  const [location, setLocation] = useState<google.maps.places.PlaceResult | null>(null)
-
+  // do something with locations
   useEffect(() => {
-    if(!map && !location) return
-    console.log('here')
-  },[map, location])
+    if(!map && !locations)  return
+    console.log('---locations---')
+
+  },[map, locations])
+
   return(
     <>
     {trip ?
@@ -38,38 +34,33 @@ export default function Explore(){
 
       {/* Explore by Category */}
       <div className={styles.expCatCon}>
-        <div id="exploreRestaurants" className={styles.expCategory}>
-          <div className={styles.expCatIcon}> <FaUtensils /> </div>
-          <p className={styles.expCatLabel}>Restaurants</p>
-        </div>
-
-        <div id="exploreHotels" className={styles.expCategory}>
-          <div className={styles.expCatIcon}> <MdHotel /> </div>
-          <p className={styles.expCatLabel}>Hotels</p>
-        </div>
-
-        <div id="exploreAttractions" className={styles.expCategory}>
-          <div className={styles.expCatIcon}> <FaMapPin /> </div>
-          <p className={styles.expCatLabel}>Attractions</p>
-        </div>
-
-        <div id="exploreBars" className={styles.expCategory}>
-          <div className={styles.expCatIcon}> <FaCocktail /> </div>
-          <p className={styles.expCatLabel}>Bars</p>
-        </div>
-
-        <div id="exploreTransit" className={styles.expCategory}>
-          <div className={styles.expCatIcon}> <MdDirectionsTransit /> </div>
-          <p className={styles.expCatLabel}>Transit</p>
-        </div>
+        <ExploreCategory category="restaurant" onNearbySearch={setLocations}/>
+        <ExploreCategory category="hotel" onNearbySearch={setLocations}/>
+        <ExploreCategory category="tourist_attraction" onNearbySearch={setLocations}/>
+        <ExploreCategory category="bar" onNearbySearch={setLocations}/>
+        <ExploreCategory category="transportation" onNearbySearch={setLocations}/>
       </div>
 
       {/* Explore Search Bar */}
       <div>
-        <AutoCompleteSearch onPlaceSelected={setLocation} name="exploreSearch" placeholder="Search for a place" />
+        <AutoCompleteSearch onPlaceSelected={setAutoComplete} name="exploreSearch" placeholder="Search for a place" />
       </div>
-      
     </section>
+
+    {/* Results */}
+    {locations ? 
+      <section>
+        {
+          locations.map((location) => (
+            <PlaceResultCard 
+            key={location.id}
+            place={location}
+            />
+          ))
+        }
+      </section>
+    : null}
+
     </>
   )
 }

@@ -121,6 +121,7 @@
   align-items: center;
   gap: 8px;
   width: 25%;
+  cursor: pointer;
 }
 .expCatIcon{
   padding: 8px;
@@ -242,6 +243,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  margin-top: 16px;
 }
 .locationPhoto{
   position: relative;
@@ -258,16 +260,18 @@
 }
 .photoRadio{
   position: absolute;
-  width: fit-content;
-  top: 16px;
-  right: 16px;
+  top: 0;
+  right: 0;
+  padding: 16px;
+  width: 20px;
+  height: 20px;
+  border: none;
+  outline: none;
 }
-.photoListBtns{
-  position: absolute;
-  z-index: 1;
-  right: 24px;
-  top: 24px;
-}
+ .photoListBtns{
+  display: flex;
+  justify-content: flex-end;
+ }
 .choosePhotoBtn{
   background: linear-gradient(90deg, var(--purple), var(--darkPurple));
   border: none;
@@ -288,4 +292,54 @@
 }
 .cancelBtn:hover, .choosePhotoBtn:hover{
   opacity: 0.8;
+}
+
+/* Place Result Card */
+
+.placeResultCard{
+  margin: 24px 0;
+  background: var(--white);
+  border-radius: 5px;
+  padding: 16px;
+  display:flex;
+  align-items: center;
+  gap: 16px;
+}
+.placeResultInfo{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.placeName{
+  font-weight: 600;
+}
+.placeType{
+  background: var(--grey-one);
+  font-size: 12px;
+  width: fit-content;
+  padding: 4px 8px;
+  border-radius: 10px;
+}
+.placeMetaData{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.priceLevel, .hours {
+  color: var(--grey-two);
+  font-size: 12px;
+  font-weight: 500;
+}
+.address{
+  font-size: 14px;
+}
+.rating{
+  color: #FFD445;
+}
+.placeResultImg{
+  width: 25%;
+  aspect-ratio: 1 / 1;
+  background-size: cover;
+  background-position: center;
+  border-radius: 5px;
 }

@@ -37,6 +37,7 @@ export default function TripInfo(){
   function handleChange(e: React.ChangeEvent<HTMLInputElement>){
     e.preventDefault()
     setTripInfo({...tripInfo, [e.target.name]: e.target.value });
+    console.log(tripInfo);
   }
 
   // choose a new trip photo
@@ -58,8 +59,7 @@ export default function TripInfo(){
   // update the cookie and context to reflect new trip info
   function saveTripData(e: React.FormEvent<HTMLFormElement>){
     e.preventDefault();
-    const updatedTrip = { ...trip, tripPhoto: tripInfo.photo, startDate: tripInfo.start, endDate: tripInfo.end };
-    console.log(updatedTrip);
+    const updatedTrip = { ...trip, tripName: tripInfo.tripName, tripPhoto: tripInfo.photo, startDate: tripInfo.start, endDate: tripInfo.end };
     
     setTrip(updatedTrip);
     setCookie('tripData', JSON.stringify(updatedTrip),{ maxAge: 60 * 60 * 24, })
@@ -73,17 +73,20 @@ export default function TripInfo(){
         <form className={styles.tripDetailsForm} onSubmit={saveTripData}>
           <label htmlFor="tripName">Trip Name</label>
           <input name="tripName" className={styles.tripDetailInput} type="text" value={tripInfo.tripName} onChange={handleChange}/>
+
           <label htmlFor="start">Start Date</label>
           <input className={styles.tripDetailInput} type="date" name="start" min={date.getDate()} value={tripInfo.start}  onChange={handleChange}/>
+
           <label htmlFor="end">End Date</label>
           <input className={styles.tripDetailInput} type="date" name="end" min={date.getDate()} value={tripInfo.end}  onChange={handleChange}/>
+
           <span className={styles.label}>Trip Cover Photo</span>
-        <div className={styles.tripPhoto}>
-            <img src={tripInfo.photo} alt={tripInfo.tripName + " Cover Photo"}/>
-            <div className={styles.changePhoto}>
-              <button onClick={(e) =>{ e.preventDefault(); setShowPhotoList(true)}}>Change</button>
-            </div>
-        </div>
+          <div className={styles.tripPhoto}>
+              <img src={tripInfo.photo} alt={tripInfo.tripName + " Cover Photo"}/>
+              <div className={styles.changePhoto}>
+                <button onClick={(e) =>{ e.preventDefault(); setShowPhotoList(true)}}>Change</button>
+              </div>
+          </div>
 
         {showPhotoList ? 
           <div className={styles.choosePhotoCon}>
@@ -91,11 +94,15 @@ export default function TripInfo(){
           {locationPhotos ? 
           <>
             <h3>Choose a Photo</h3>
+            <div className={styles.photoListBtns}>
+              <button className={styles.choosePhotoBtn} onClick={changePhoto}>Choose Photo</button>
+              <button className={styles.cancelBtn} onClick={(e) => {e.preventDefault(); setShowPhotoList(false)}}>Cancel</button>
+            </div>
             <div className={styles.photoListCon}>
               {
                 locationPhotos.map((photo, i) => (
                   <div className={styles.locationPhoto} key={i + "photoList"}>
-                    <input type="radio" className={styles.photoRadio} value={photo.getUrl()} onChange={selectPhoto}/>
+                    <input type="radio" name="photo" className={styles.photoRadio} value={photo.getUrl()} onChange={selectPhoto}/>
                     <img src={photo.getUrl()} />
                   </div>
                 ))
