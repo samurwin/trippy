@@ -61,6 +61,12 @@
   margin: 0 4px 4px 0;
 }
 
+.addBucketListBtn{
+  text-wrap: nowrap;
+  color: var(--dark);
+  opacity: 0.5;
+}
+
 /* Trip Header */
 .tripHeaderCon{
   display: flex;
