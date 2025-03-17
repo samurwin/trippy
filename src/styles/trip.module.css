@@ -17,6 +17,16 @@
   height: calc(100vh - 100px);
   overflow-y: scroll;
 }
+.tripContent::-webkit-scrollbar{
+  background: transparent;
+  border: none;
+  width: 8px;
+
+}
+.tripContent::-webkit-scrollbar-thumb{
+  background: var(--grey-one);
+  border-radius: 20px;
+}
 /* Side Bar */
 .sideBar{
   padding: 24px 16px 16px 16px;
@@ -335,6 +345,7 @@
 }
 .rating{
   color: #FFD445;
+  text-wrap: nowrap;
 }
 .placeResultImg{
   width: 25%;

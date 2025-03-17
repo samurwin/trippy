@@ -56,7 +56,7 @@ export default function ExploreCategory({category, onNearbySearch}:ExploreCatego
       fields: ['id', 'displayName', 'editorialSummary', 'location', 'formattedAddress', 'photos', 'priceLevel', 'primaryType', 'rating', 'regularOpeningHours', ],
       locationRestriction: {
           center: center,
-          radius: 500, 
+          radius: 10000, 
       },
       includedPrimaryTypes: primaryTypes,
       maxResultCount: 10,

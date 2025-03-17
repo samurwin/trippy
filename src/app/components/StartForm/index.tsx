@@ -1,5 +1,5 @@
 "use client"
-
+import { MarkersProvider } from "@/app/trip/[trip-id]/MarkersContext";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from 'next/navigation'
 import { setCookie } from 'cookies-next';
@@ -120,7 +120,9 @@ export default function StartForm(){
 
   return (
     <APIProvider apiKey={googleApiKey} onLoad={() => console.log('Maps API has loaded.')}>
-      <StartFormInner/>
+      <MarkersProvider>
+        <StartFormInner/>
+      </MarkersProvider>
     </APIProvider>
   )
 }

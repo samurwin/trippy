@@ -1,9 +1,8 @@
 import PoiMarkers from '../PoiMarkers';
-
+import { useMarkers } from '@/app/trip/[trip-id]/MarkersContext';
 import {Map, useMap} from '@vis.gl/react-google-maps';
 const googleMapId = process.env.NEXT_PUBLIC_GOOGLE_MAP_ID
 
-type Poi ={ key: string, location: google.maps.LatLngLiteral }
 interface TripMapProps {
   defaultCenter?: {
     lat: number,
@@ -15,16 +14,17 @@ interface TripMapProps {
 
 export default function TripMap({ defaultCenter, mapWidth, mapHeight }:TripMapProps) {
   const map = useMap();
-  const locations = ''
+  const { markers } = useMarkers();
+  
   return(
       <Map
           style={{width: mapWidth ? mapWidth : "0" , height: mapHeight ? mapHeight : "0"}}
           mapId={googleMapId}
-          defaultZoom={12}
+          defaultZoom={10}
           defaultCenter={ defaultCenter ? defaultCenter : undefined }
           >
-            {locations ? 
-              <PoiMarkers pois={locations} />
+            {markers ? 
+              <PoiMarkers pois={markers} />
             :null}
       </Map>  
   )

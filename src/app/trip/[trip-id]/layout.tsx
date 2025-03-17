@@ -1,11 +1,12 @@
 "use client"
 import TripContext  from './TripContext'
+import {MarkersProvider} from './MarkersContext'
 import TripMap from '../../components/TripMap'
 import Header from '../../components/Header';
 import SideBar from '../../components/SideBar'
 import styles from '../../../styles/trip.module.css'
 import { useState } from 'react'
-import { tripData } from '../../../../types'
+import { tripData, Poi } from '../../../../types'
 
 import { getCookie } from 'cookies-next';
 import { APIProvider } from '@vis.gl/react-google-maps';
@@ -22,6 +23,7 @@ export default function TripLayout({ children }: Readonly<{  children: React.Rea
   return (
     <APIProvider apiKey={googleApiKey} onLoad={() => console.log('Maps API has loaded.')}>
     <TripContext.Provider value={value}>
+    <MarkersProvider>
       <div className={styles.tripLayoutCon}>
         <div className={styles.tripContentWrapper}>
           <Header/>
@@ -40,6 +42,7 @@ export default function TripLayout({ children }: Readonly<{  children: React.Rea
         </div>
         <TripMap defaultCenter={trip?.centerMap ? trip.centerMap : undefined} mapWidth="100vw" mapHeight="100vh" />
       </div>
+    </MarkersProvider>
     </TripContext.Provider>  
     </APIProvider>
   )

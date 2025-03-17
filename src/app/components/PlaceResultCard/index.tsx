@@ -1,16 +1,8 @@
 import styles from '../../../styles/trip.module.css'
+import { PlaceResultCardProps } from '../../../../types';
 
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 
-interface PlaceResultCardProps {
-  displayName: string | null | undefined,
-  primaryType: string | undefined | null,
-  priceLevel: string | number | undefined | null ,
-  rating: number | undefined | null,
-  regularOpeningHours: google.maps.places.OpeningHours | google.maps.places.PlaceOpeningHours | undefined | null,
-  photos: any,
-  formattedAddress: string | null | undefined
-}
 
 export default function PlaceResultCard({ displayName, primaryType, priceLevel, rating, regularOpeningHours, photos, formattedAddress }:PlaceResultCardProps){
 
@@ -100,7 +92,6 @@ export default function PlaceResultCard({ displayName, primaryType, priceLevel, 
     else return;
 
   }
-
 
   return(
     <div className={styles.placeResultCard}>
