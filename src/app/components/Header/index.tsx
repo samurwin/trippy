@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import logo from "../../../../public/images/trouvaille-logo.png";
+import logo from "../../../../public/images/trippy.png";
 
 export default function Header(){
   return(
