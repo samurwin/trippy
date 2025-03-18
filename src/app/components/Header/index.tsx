@@ -1,14 +1,16 @@
 import Image from "next/image";
 
-import logo from "../../../../public/images/trouvaille-logo.png";
+import logo from "../../../../public/images/trippy.png";
 
 export default function Header(){
   return(
     <header>
-      <Image src={logo} alt="Trouvaille Trip Planner Logo" priority/>
+      <div>
+      <Image src={logo} alt="Trippy Trip Planner Logo" priority/>
       <nav>
         <a className="navItem" href="#">login / signup</a>
       </nav>
+      </div>
     </header>
   )
 }

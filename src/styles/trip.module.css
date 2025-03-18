@@ -1,0 +1,362 @@
+/* Layout */
+.tripLayoutCon{
+  display: flex;
+  flex-wrap: no-wrap;
+  background: var(--light);
+}
+.tripContentWrapper{
+  width: 120%;
+  height: 100vh;
+}
+.tripContentCon{
+  display: flex;
+}
+.tripContent{
+  padding: 24px;
+  width: 100%;
+  height: calc(100vh - 100px);
+  overflow-y: scroll;
+}
+.tripContent::-webkit-scrollbar{
+  background: transparent;
+  border: none;
+  width: 8px;
+
+}
+.tripContent::-webkit-scrollbar-thumb{
+  background: var(--grey-one);
+  border-radius: 20px;
+}
+/* Side Bar */
+.sideBar{
+  padding: 24px 16px 16px 16px;
+  border-right: solid 1px var(--grey-one);
+  display:flex;
+  flex-direction: column;
+  gap: 48px;
+  width: fit-content;
+}
+.subList{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.navLabel{
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--grey-two);
+}
+.navItem{
+  display: block;
+  text-decoration: none;
+  font-weight: medium;
+  font-size: 16px;
+  color: var(--dark);
+  margin-left: 8px;
+  text-wrap: nowrap;
+}
+
+.navItem svg {
+  vertical-align: middle;
+  margin: 0 4px 4px 0;
+}
+
+.addBucketListBtn{
+  text-wrap: nowrap;
+  color: var(--dark);
+  opacity: 0.5;
+}
+
+/* Trip Header */
+.tripHeaderCon{
+  display: flex;
+  align-items: flex-end;
+  background-size: cover;
+  background-position: center;
+  height: 25vh;
+  min-height: 150px;
+  padding: 0 16px;
+  border-radius: 10px;
+  margin-bottom: 24px;
+  position: relative;
+}
+.tripHeaderText{
+  background: var(--white);
+  padding: 8px 16px;
+  border-radius: 5px;
+  width: fit-content;
+  box-shadow: 2px 2px 4px rgba(0,0,0,0.25);
+  margin-bottom: -10px;
+}
+.tripHeaderText h1{
+  width: fit-content;
+  font-size: 24px;
+  line-height: 32px;
+}
+.tripDate{
+  margin-top: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--grey-two);
+}
+.headerEditBtn{
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  opacity: 0.5;
+  background: var(--light);
+  padding: 8px;
+  border-radius: 50px;
+  aspect-ratio: 1/1;
+  cursor: pointer;
+  transition: opacity 0.2 ease-in-out;
+}
+.headerEditBtn:hover{
+  opacity: 0.8;
+}
+.editName, .editDate{
+  font-size: 16px;
+  opacity: 0;
+  transition: opacity 0.2 ease-in-out;
+  cursor: pointer;
+}
+.editName:hover, .editDate:hover{
+  opacity: 1;
+}
+
+/* Explore */
+.expCatCon{
+  margin: 24px 0;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.expCategory{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 25%;
+  cursor: pointer;
+}
+.expCatIcon{
+  padding: 8px;
+  background: var(--darkPurple);
+  border-radius: 50px;
+  color: #fff;
+  font-size: 18px;
+  text-align:center;
+  aspect-ratio: 1/1;
+}
+.expCatLabel{
+  font-size: 12px;
+}
+
+.exploreSearch{
+  width: 100%;
+  box-sizing: border-box;
+     -webkit-box-sizing:border-box;
+     -moz-box-sizing: border-box;
+  border: none;
+  font-size: 16px;
+  border-radius: 5px;
+  padding: 16px;
+
+}
+
+/* Trip Details */
+.tripDetailsForm{
+  margin-top: 24px;
+}
+.tripDetailsForm label, .label {
+  font-size: 12px;
+  line-height: 21px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.tripDetailInput{
+  margin-bottom: 16px;
+  background: transparent;
+  color: var(--dark);
+}
+.tripDetailInput:hover {
+  background: var(--white);
+}
+.tripPhoto img {
+  max-height: 200px;
+}
+
+.tripPhoto{
+  position: relative;
+  border-radius: 5px;
+  overflow: hidden;
+  max-height: 200px;
+  width: fit-content;
+  margin-bottom: 24px;
+}
+.changePhoto{
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+.changePhoto button{
+  background: var(--light);
+  border-radius: 5px;
+  border: none;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.changePhoto:hover{
+  opacity: 1;
+}
+
+.saveBtn{
+  background: linear-gradient(90deg, var(--blue), var(--darkBlue));
+  padding: 8px 16px;
+  color: #fff;
+  border: none;
+  border-radius: 5px; 
+}
+
+.choosePhotoCon{
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  background: var(--light);
+  padding: 24px;
+  width: 100vw;
+  height: 95vh;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content:center;
+}
+
+.photoList{
+  position: relative;
+  background: var(--light);
+  width: 80%;
+  height: 80%;
+  max-height: 1000px;
+  max-width: 1200px;
+  overflow: scroll;
+  padding: 24px;
+  border-radius: 5px;
+
+}
+.photoListCon{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+.locationPhoto{
+  position: relative;
+  max-width: 350px;
+  overflow: hidden; 
+  height: fit-content;
+  aspect-ratio: 16 / 9;
+  margin-bottom: 24px;
+}
+.locationPhoto img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+.photoRadio{
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 16px;
+  width: 20px;
+  height: 20px;
+  border: none;
+  outline: none;
+}
+ .photoListBtns{
+  display: flex;
+  justify-content: flex-end;
+ }
+.choosePhotoBtn{
+  background: linear-gradient(90deg, var(--purple), var(--darkPurple));
+  border: none;
+  padding: 8px;
+  color: var(--white);
+  border-radius: 5px;
+  margin-right: 8px;
+}
+.cancelBtn{
+  background: var(--error);
+  border: none;
+  padding: 8px;
+  color: var(--white);
+  border-radius: 5px;
+}
+.cancelBtn, .choosePhotoBtn{
+  transition: opacity 0.2s ease-in-out;
+}
+.cancelBtn:hover, .choosePhotoBtn:hover{
+  opacity: 0.8;
+}
+
+/* Place Result Card */
+
+.placeResultCard{
+  margin: 24px 0;
+  background: var(--white);
+  border-radius: 5px;
+  padding: 16px;
+  display:flex;
+  align-items: center;
+  gap: 16px;
+}
+.placeResultInfo{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.placeName{
+  font-weight: 600;
+}
+.placeType{
+  background: var(--grey-one);
+  font-size: 12px;
+  width: fit-content;
+  padding: 4px 8px;
+  border-radius: 10px;
+}
+.placeMetaData{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.priceLevel, .hours {
+  color: var(--grey-two);
+  font-size: 12px;
+  font-weight: 500;
+}
+.address{
+  font-size: 14px;
+}
+.rating{
+  color: #FFD445;
+  text-wrap: nowrap;
+}
+.placeResultImg{
+  width: 25%;
+  aspect-ratio: 1 / 1;
+  background-size: cover;
+  background-position: center;
+  border-radius: 5px;
+}

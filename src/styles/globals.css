@@ -61,6 +61,7 @@ table {
   --white: #fff;
   --light: #F5F6F6;
   --grey-one: #DCDDDD;
+  --grey-two: #464646;
   /* utility */
   --success: #3DA73D;
   --error:  #CE2323;
@@ -70,17 +71,27 @@ table {
 /* Header Global */
 body{
   font-family: Inter;
+  background: var(--light);
 }
 header{
+  padding: 16px;
+  background: #fff;
+}
+header > div {
+  max-width: 1200px;
+  margin: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px;
-  max-width: 1200px;
-  margin: auto;
+  gap: 24px;
 }
-header > img{
-  max-width: 150px;
+
+button{
+  cursor: pointer;
+}
+
+header > div > img{
+  max-width: 100px;
   height:auto;
 }
 .navItem{
@@ -99,7 +110,22 @@ h1, h2, h3, h4, h5, p, li {
   color: var(--dark);
 }
 h1{
-  font-size: 48px;
+  font-size: 32px;
   line-height: 56px;
   font-weight: 700;
+}
+h2{
+  font-size: 36px;
+  line-height: 44px;
+  font-weight: 700;
+}
+input{
+  padding: 16px;
+  width:100%;
+  border: none;
+  font-size: 16px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing: border-box;
 }
