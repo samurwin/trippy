@@ -41,7 +41,10 @@ export default function Explore(){
         rating: location.rating,
         regularOpeningHours: location.regularOpeningHours,
         photos: location.photos,
-        formattedAddress: location.formattedAddress
+        formattedAddress: location.formattedAddress,
+        formattedPhone: location.nationalPhoneNumber,
+        website: location.websiteURI,
+        summary: location.editorialSummary
       })
       if(location.location){
         newMarkers.push({
@@ -69,7 +72,10 @@ export default function Explore(){
       rating: autoComplete.rating,
       regularOpeningHours: autoComplete.opening_hours,
       photos: autoComplete.photos,
-      formattedAddress: autoComplete.formatted_address
+      formattedAddress: autoComplete.formatted_address,
+      formattedPhone: autoComplete.formatted_phone_number,
+      website: autoComplete.website,
+      summary: null
     }]
     if(autoComplete.geometry?.location){
       let newMarker: Poi[] = [{
@@ -121,6 +127,9 @@ export default function Explore(){
             regularOpeningHours={result.regularOpeningHours}
             photos={result.photos}
             formattedAddress={result.formattedAddress}
+            formattedPhone={result.formattedPhone}
+            website={result.website}
+            summary={result.summary}
             />
           ))
         }

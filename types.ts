@@ -4,11 +4,13 @@ export interface tripData {
   tripName: string,
   startDate: string,
   endDate: string,
+  tripDates: string[],
   centerId?: string,
   centerMap?: {
     lat: number,
     lng: number
-  }
+  },
+  itinerary?: Itineraryitem[]
 }
 
 export type Poi ={ key: string, location: google.maps.LatLngLiteral }
@@ -20,5 +22,30 @@ export interface PlaceResultCardProps {
   rating: number | undefined | null,
   regularOpeningHours: google.maps.places.OpeningHours | google.maps.places.PlaceOpeningHours | undefined | null,
   photos: any,
-  formattedAddress: string | null | undefined
+  formattedAddress: string | null | undefined,
+  formattedPhone: string | null | undefined,
+  website: string | null | undefined,
+  summary: string | null | undefined
+}
+
+export interface ItineraryFormData {
+  length: "single-day" | "multi-day",
+  startDate: string,
+  endDate?: string,
+  timeblock?: string,
+  startTime?: string,
+  endTime?: string,
+  notes?: string[]
+}
+
+
+export interface Itineraryitem {
+  length: "single-day" | "multi-day",
+  startDate: string,
+  endDate?: string,
+  timeblock?: string,
+  startTime?: string,
+  endTime?: string,
+  notes?: string[],
+  place: PlaceResultCardProps
 }

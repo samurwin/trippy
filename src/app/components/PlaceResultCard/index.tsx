@@ -1,10 +1,14 @@
 import styles from '../../../styles/trip.module.css'
 import { PlaceResultCardProps } from '../../../../types';
+import AddToModal from '../AddToModal';
 
+import { useState } from 'react'
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 
-
-export default function PlaceResultCard({ displayName, primaryType, priceLevel, rating, regularOpeningHours, photos, formattedAddress }:PlaceResultCardProps){
+export default function PlaceResultCard(props:PlaceResultCardProps){
+const [moreDetails, setMoreDetails] = useState(false);
+const [addToItenerary, setAddToItinerary] = useState(false);
+const [addToBucketList, setAddToBucketList] = useState(false);
 
   function formatType(primaryType:string){
     if(primaryType){
@@ -17,7 +21,6 @@ export default function PlaceResultCard({ displayName, primaryType, priceLevel, 
       return formattedType
     }
   }
-
   function displayPriceLevel(priceLevel:string | number){
       switch(priceLevel){
         case 'FREE':
@@ -69,7 +72,6 @@ export default function PlaceResultCard({ displayName, primaryType, priceLevel, 
     } else return;
     
   }
-
   function displayHours(hours:any){
     const date = new Date;
     const day = date.getDay();
@@ -87,32 +89,69 @@ export default function PlaceResultCard({ displayName, primaryType, priceLevel, 
           return hours.weekday_text[day - 1];
         }
       }
-
     }
     else return;
-
   }
 
   return(
-    <div className={styles.placeResultCard}>
-      {photos && photos[0] ? 
-            <div className={styles.placeResultImg} style={{backgroundImage: `url(${photos[0].getURL ? photos[0].getURL() : photos[0].getURI ? photos[0].getURI() : null})`}}></div>
+    <div className={moreDetails ? styles.openPlaceResult : styles.placeResultCard}>
+      <div className={moreDetails ? styles.row : styles.single}>
+      {props.photos && props.photos[0] ? 
+            <div className={styles.placeResultImg} style={{backgroundImage: `url(${props.photos[0].getURL ? props.photos[0].getURL() : props.photos[0].getURI ? props.photos[0].getURI() : null})`}}></div>
       : null}
+      {moreDetails && props.photos ?
+      <>
+        {props.photos[1] ?
+        <div className={styles.placeResultImg} style={{backgroundImage: `url(${props.photos[1].getURL ? props.photos[1].getURL() : props.photos[1].getURI ? props.photos[1].getURI() : null})`}}></div>
+        : null}
+        {props.photos[2] ?
+        <div className={styles.placeResultImg} style={{backgroundImage: `url(${props.photos[2].getURL ? props.photos[2].getURL() : props.photos[2].getURI ? props.photos[2].getURI() : null})`}}></div>
+        : null}
+      </>
+      :null}
+      </div>
 
       <div className={styles.placeResultInfo}>
-        <p className={styles.placeName}>{displayName}</p>
+        <p className={styles.placeName}>{props.displayName}</p>
         <div className={styles.placeMetaData}>
-          <p className={styles.placeType}>{formatType(primaryType!)}</p>
-          <p className={styles.priceLevel}>{displayPriceLevel(priceLevel!)}</p>
+          <p className={styles.placeType}>{formatType(props.primaryType!)}</p>
+          <p className={styles.priceLevel}>{displayPriceLevel(props.priceLevel!)}</p>
           <p className={styles.rating}>
-            {displayStars(rating!)}
+            {displayStars(props.rating!)}
           </p>
-          <p className={styles.hours}>
-            {displayHours(regularOpeningHours!)}
-          </p>
+          {moreDetails ? 
+          <p className={styles.hours}>{displayHours(props.regularOpeningHours)}</p>
+          : null}
         </div>
-        <p className={styles.address}>{formattedAddress}</p>
+        <p className={styles.address}>{props.formattedAddress}</p>
+        {/* additional detials */}
+        {moreDetails ? 
+          <>
+            <div className={styles.flexCon}>
+              {props.formattedPhone ?
+                <p className={styles.placeLink}><b>Phone: </b><a href={`tel: ${props.formattedPhone}`}>{props.formattedPhone}</a></p> 
+              : null }
+              {props.website ?
+                <p className={styles.placeLink}><b>Website: </b><a href={props.website}>{props.website.length < 50 ? props.website : 'Visit Website'}</a></p>
+              : null}
+            </div>
+            {props.summary ? <p>{props.summary}</p> : null}
+          </>
+        : null}
+        <div className={styles.btnCon}>
+          <button onClick={() => setAddToItinerary(true)} className={styles.pinkBtn}>Add to Itenerary</button>
+          <button onClick={() => setAddToBucketList(true)} className={styles.blueBtn}>Add to Bucket List</button>
+        </div>
+        <button onClick={() => setMoreDetails(!moreDetails)} className={styles.moreBtn}>{moreDetails === false ?  'More Details' : 'Show Less'}</button>
       </div>
+      
+      {/* Add to Modals */}
+      {addToItenerary ?
+        <AddToModal addTo='itinerary' place={props} closeModal={setAddToItinerary} />
+      : addToBucketList ?
+        <AddToModal addTo='bucket-list' place={props} closeModal={setAddToBucketList} />
+      : null}
+
     </div>
   )
 }

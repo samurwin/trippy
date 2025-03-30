@@ -1,3 +1,33 @@
+/* BUTTONS */
+.pinkBtn{
+  background: linear-gradient(90deg, var(--pink), var(--darkPink));
+  border: none;
+  padding: 8px 16px;
+  color: #fff;
+  transition: all 0.2s ease-in-out;
+  border-radius: 5px;
+}
+.purpleBtn{
+  background: linear-gradient(90deg, var(--purple), var(--darkPurple));
+  border: none;
+  padding: 8px 16px;
+  color: #fff;
+  transition: all 0.2s ease-in-out;
+  border-radius: 5px;
+}
+.blueBtn{
+  background: linear-gradient(90deg, var(--blue), var(--darkBlue));
+  padding: 8px 16px;
+  color: #fff;
+  border: none;
+  border-radius: 5px; 
+  transition: all 0.2s ease-in-out;
+}
+
+.blueBtn:hover, .purpleBtn:hover, .pinkBtn:hover{
+  opacity: 0.8;
+}
+
 /* Layout */
 .tripLayoutCon{
   display: flex;
@@ -154,9 +184,6 @@
 
 .exploreSearch{
   width: 100%;
-  box-sizing: border-box;
-     -webkit-box-sizing:border-box;
-     -moz-box-sizing: border-box;
   border: none;
   font-size: 16px;
   border-radius: 5px;
@@ -228,7 +255,7 @@
   border-radius: 5px; 
 }
 
-.choosePhotoCon{
+.modalCon{
   position: absolute;
   z-index: 2;
   top: 0;
@@ -243,7 +270,7 @@
   justify-content:center;
 }
 
-.photoList{
+.modal{
   position: relative;
   background: var(--light);
   width: 80%;
@@ -312,14 +339,18 @@
 
 /* Place Result Card */
 
-.placeResultCard{
+.placeResultCard, .openPlaceResult{
   margin: 24px 0;
   background: var(--white);
   border-radius: 5px;
-  padding: 16px;
+  padding: 24px;
   display:flex;
   align-items: center;
-  gap: 16px;
+  gap: 10px;
+}
+.openPlaceResult{
+  flex-direction: column;
+  align-items: flex-start;
 }
 .placeResultInfo{
   display: flex;
@@ -333,8 +364,9 @@
   background: var(--grey-one);
   font-size: 12px;
   width: fit-content;
-  padding: 4px 8px;
+  padding: 10px 8px;
   border-radius: 10px;
+  line-height: 0;
 }
 .placeMetaData{
   display: flex;
@@ -347,16 +379,90 @@
   font-weight: 500;
 }
 .address{
-  font-size: 14px;
+  font-size: 12px;
 }
 .rating{
   color: #FFD445;
   text-wrap: nowrap;
 }
+.photosCon{
+  width: 30%;
+  max-width: 500px;
+}
 .placeResultImg{
-  width: 25%;
+  width: 100%;
+  height: 100%;
   aspect-ratio: 1 / 1;
   background-size: cover;
   background-position: center;
   border-radius: 5px;
+}
+.moreBtn{
+  background: transparent;
+  border: none;
+  color: var(--grey-two);
+  text-decoration: underline;
+  text-align: left;
+  padding: 0;
+}
+.btnCon, .flexCon{
+  display:flex;
+  gap: 16px;
+}
+.btnCon button{
+  font-size: 14px;
+  padding: 4px 10px;
+}
+.placeLink{
+  font-size: 14px;
+}
+.placeLink b {
+  font-weight: 700;
+}
+.placeLink a {
+  color: var(--blue);
+}
+.row{
+  display:flex;
+  gap: 10px;
+  width: 100%;
+}
+.single{
+  width:30%;
+}
+/* Add to Modals */
+.subheading{
+  font-size: 24px;
+  font-weight: 700;
+}
+.addToForm{
+  max-width: 600px;
+  margin: 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.dropDown{
+  background: var(--white);
+  border-radius: 2px;
+  border: none;
+  padding: 16px;
+  font-size: 16px;
+  display: block;
+}
+.dropDown, .addToInput {
+  width: 280px;
+  max-width: 100%;
+}
+.addToForm label {
+  margin-bottom: 4px;
+  font-weight: 600;
+  line-height: 24px;
+  font-size: 14px;
+}
+.addNote{
+  height: 150px;
+  border: none;
+  width: 100%;
+  padding: 16px;
 }

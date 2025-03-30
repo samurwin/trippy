@@ -5,7 +5,6 @@ import { useMapsLibrary, useMap } from '@vis.gl/react-google-maps';
 import{ useState, useEffect } from 'react';
 
 import styles from '../../../styles/trip.module.css'
-import { useTrip } from '../../trip/[trip-id]/TripContext';
 
 interface ExploreCategoryProps {
   category: string,
@@ -14,7 +13,6 @@ interface ExploreCategoryProps {
 
 export default function ExploreCategory({category, onNearbySearch}:ExploreCategoryProps){
   const map = useMap();
-  const { trip } = useTrip()
   const placesLib = useMapsLibrary('places');
 
   // keep track of map center to search with
@@ -53,7 +51,7 @@ export default function ExploreCategory({category, onNearbySearch}:ExploreCatego
       primaryTypes = [category]
     }
     const request = {
-      fields: ['id', 'displayName', 'editorialSummary', 'location', 'formattedAddress', 'photos', 'priceLevel', 'primaryType', 'rating', 'regularOpeningHours', ],
+      fields: ['id', 'displayName', 'editorialSummary', 'location', 'formattedAddress', 'photos', 'priceLevel', 'primaryType', 'rating', 'regularOpeningHours', 'nationalPhoneNumber', 'websiteURI', 'editorialSummary' ],
       locationRestriction: {
           center: center,
           radius: 10000, 

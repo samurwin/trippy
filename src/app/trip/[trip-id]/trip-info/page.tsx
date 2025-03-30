@@ -89,8 +89,8 @@ export default function TripInfo(){
           </div>
 
         {showPhotoList ? 
-          <div className={styles.choosePhotoCon}>
-          <div className={styles.photoList}>
+          <div className={styles.modalCon}>
+          <div className={styles.modal}>
           {locationPhotos ? 
           <>
             <h3>Choose a Photo</h3>

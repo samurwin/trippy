@@ -129,3 +129,19 @@ input{
   -webkit-box-sizing:border-box;
   -moz-box-sizing: border-box;
 }
+p{
+  line-height: 21px;
+}
+input, textarea{
+  box-sizing: border-box;
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing: border-box;
+}
+.txtPink{
+  color: var(--pink);
+}
+.formRow{
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}

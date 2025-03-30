@@ -57,6 +57,20 @@ const  StartFormInner = () => {
 
   // on submit save trip data to cookie
   function startTrip(e: React.FormEvent<HTMLFormElement>){
+
+    function getDateRange(startDate:string, endDate:string) {
+      let start = new Date(startDate);
+      let end = new Date(endDate);
+      let dateArray = [];
+  
+      while (start <= end) {
+          dateArray.push(start.toISOString().split('T')[0]); // Format as YYYY-MM-DD
+          start.setDate(start.getDate() + 1);
+      }
+  
+      return dateArray;
+    }
+
     e.preventDefault();
     let tripPhoto = ''
     if(formData.location?.photos){
@@ -68,7 +82,8 @@ const  StartFormInner = () => {
       tripName: formData.location?.name ? "Trip to " + formData.location?.name : "Trip to " + formData.location?.formatted_address,
       centerId: formData.location?.place_id,
       startDate: formData.start,
-      endDate: formData.end
+      endDate: formData.end,
+      tripDates: getDateRange(formData.start, formData.end)
     }
     if(formData.location?.geometry?.location){
       tripData = {
