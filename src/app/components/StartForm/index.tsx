@@ -64,7 +64,7 @@ const  StartFormInner = () => {
       let dateArray = [];
   
       while (start <= end) {
-          dateArray.push(start.toISOString().split('T')[0]); // Format as YYYY-MM-DD
+          dateArray.push({date: start.toISOString().split('T')[0]}); // Format as YYYY-MM-DD
           start.setDate(start.getDate() + 1);
       }
   

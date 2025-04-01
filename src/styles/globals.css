@@ -145,3 +145,7 @@ input, textarea{
   justify-content: space-between;
   gap: 8px;
 }
+.error{
+  color: var(--error);
+  font-size: 14px;
+}

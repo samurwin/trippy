@@ -1,8 +1,8 @@
 import { useTrip } from "@/app/trip/[trip-id]/TripContext"
 import styles from '../../../styles/trip.module.css'
 import IteneraryForm from "../IteneraryForm";
-import { PlaceResultCardProps, ItineraryFormData, Itineraryitem } from '../../../../types'
-import { setCookie } from 'cookies-next';
+import { PlaceResultCardProps, ItineraryFormData, Itineraryitem, tripData } from '../../../../types'
+import { setCookie, getCookie } from 'cookies-next';
 
 interface AddToModalProps {
   addTo: 'itinerary' | 'bucket-list';
@@ -26,16 +26,27 @@ export default function AddToModal({addTo, place, closeModal}:AddToModalProps){
     console.log(newItineraryItem);
     
     // add to trip and save to cookie
-    const updatedTrip = {
-      ...trip,
-      itinerary: trip?.itinerary ? trip.itinerary : []
+    if(trip){
+      let updatedTrip:tripData = {
+        ...trip,
+        tripDates: trip.tripDates.map(dateObj => 
+          dateObj.date === newItineraryItem.startDate 
+            ? { ...dateObj, itinerary: dateObj.itinerary ? [...dateObj.itinerary, newItineraryItem] : [newItineraryItem] }
+            : dateObj
+        )
+      }
+  
+      console.log(updatedTrip);
+      setTrip(updatedTrip);
+      setCookie('tripData', JSON.stringify(updatedTrip),{ maxAge: 60 * 60 * 24, })
+      const checkCookie = getCookie('tripData')
+      if (checkCookie) console.log(JSON.parse(checkCookie));
+      handleClose();
+      window.alert("Saved itinerary item")
+    } else {
+      throw new Error('Error loading trip data')
     }
-    updatedTrip.itinerary.push(newItineraryItem)
-
-    setTrip(updatedTrip);
-    setCookie('tripData', JSON.stringify(updatedTrip),{ maxAge: 60 * 60 * 24, })
-    console.log("Updated Trip")
-    handleClose();
+ 
   }
 
   return (

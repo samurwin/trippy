@@ -4,12 +4,16 @@ export interface tripData {
   tripName: string,
   startDate: string,
   endDate: string,
-  tripDates: string[],
+  tripDates: TripDate[],
   centerId?: string,
   centerMap?: {
     lat: number,
     lng: number
   },
+}
+
+export type TripDate = {
+  date: string,
   itinerary?: Itineraryitem[]
 }
 
@@ -25,7 +29,8 @@ export interface PlaceResultCardProps {
   formattedAddress: string | null | undefined,
   formattedPhone: string | null | undefined,
   website: string | null | undefined,
-  summary: string | null | undefined
+  summary: string | null | undefined,
+  explore?: boolean
 }
 
 export interface ItineraryFormData {

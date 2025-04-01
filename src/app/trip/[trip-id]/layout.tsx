@@ -15,9 +15,14 @@ const googleApiKey : any = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
 
 export default function TripLayout({ children }: Readonly<{  children: React.ReactNode; }>){
 
-  const tripCookie = getCookie("tripData");
-
-  const [trip, setTrip] = useState<tripData>(JSON.parse(tripCookie!));
+   const [trip, setTrip] = useState<tripData | null>(() => {
+    // Load trip from cookie on initial render
+    if (typeof window !== "undefined") {
+      const tripCookie = getCookie("tripData");
+      return tripCookie ? JSON.parse(tripCookie) : null
+    }
+    return null;
+  })
   const value = {trip, setTrip};
 
   return (

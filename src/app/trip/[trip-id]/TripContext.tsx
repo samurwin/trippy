@@ -5,7 +5,7 @@ import { tripData } from '../.././../../types';
 
 type TripContextType = {
   trip: tripData | null;
-  setTrip: Function
+  setTrip:  (trip: tripData | null) => void;
 };
 
 const TripContext = createContext<TripContextType>({ 

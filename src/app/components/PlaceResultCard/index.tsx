@@ -138,10 +138,13 @@ const [addToBucketList, setAddToBucketList] = useState(false);
             {props.summary ? <p>{props.summary}</p> : null}
           </>
         : null}
-        <div className={styles.btnCon}>
-          <button onClick={() => setAddToItinerary(true)} className={styles.pinkBtn}>Add to Itenerary</button>
-          <button onClick={() => setAddToBucketList(true)} className={styles.blueBtn}>Add to Bucket List</button>
-        </div>
+        {props.explore ? (
+          <div className={styles.btnCon}>
+            <button onClick={() => setAddToItinerary(true)} className={styles.pinkBtn}>Add to Itenerary</button>
+            <button onClick={() => setAddToBucketList(true)} className={styles.blueBtn}>Add to Bucket List</button>
+          </div>
+        ): null}
+
         <button onClick={() => setMoreDetails(!moreDetails)} className={styles.moreBtn}>{moreDetails === false ?  'More Details' : 'Show Less'}</button>
       </div>
       

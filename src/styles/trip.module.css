@@ -466,3 +466,25 @@
   width: 100%;
   padding: 16px;
 }
+
+/* Itinerary */
+.itineraryCon{
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.itineraryHeader{
+  height: 30vh;
+  border-radius: 5px;
+  background-position: center;
+}
+.itineraryDate{
+  font-weight: bold;
+  font-size: 18px;
+}
+.noteCon{
+  background: var(--white);
+  padding: 16px 24px;
+  border-radius: 0 30px 30px 30px; 
+}

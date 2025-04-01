@@ -130,6 +130,7 @@ export default function Explore(){
             formattedPhone={result.formattedPhone}
             website={result.website}
             summary={result.summary}
+            explore={true}
             />
           ))
         }

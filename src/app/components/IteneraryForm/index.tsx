@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import styles from '../../../styles/trip.module.css'
-import { ItineraryFormData } from '../../../../types'
+import { ItineraryFormData, TripDate } from '../../../../types'
 
 interface ItineraryFormProps {
   handleFormData: (iteneraryFormData: ItineraryFormData) => void,
-  tripDates: string[],
+  tripDates: TripDate[],
   cancelFunc: () => void
 }
 
@@ -12,17 +12,29 @@ export default function ItineraryForm({ handleFormData, tripDates, cancelFunc }:
   const [activityLength, setActivityLength] = useState('single-day')
   const [specificTime, setSpecificTime] = useState(false);
   const [formData, setFormData] = useState<ItineraryFormData>({length: 'single-day', startDate: ''})
+  const [errorMsg, setErrorMsg] = useState<string>();
 
   // handle input change
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>){
     e.preventDefault();
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if(e.target.name === 'note'){
+      setFormData({...formData, notes: [e.target.value]})
+    } else if(e.target.name === 'timeblock'){
+      console.log(e.target.value)
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
   }
   
   // submit form - add to itenerary
   function addToItenerary(e: React.FormEvent<HTMLFormElement>){
     e.preventDefault();
     console.log(formData);
+    if(!formData.startDate){
+      setErrorMsg("Select a date to add to the itinerary");
+      return;
+    }
     handleFormData(formData);
   }
 
@@ -46,24 +58,25 @@ export default function ItineraryForm({ handleFormData, tripDates, cancelFunc }:
         <>
         <div className="formRow">
           <div className={styles.inputCon}>
-            <label htmlFor="startDate">Select a day:</label>
-            <select name="startDate" className={styles.dropDown} required onChange={handleChange}>
-              {tripDates.map(date => (
-                <option key={date} value={date}>{date}</option>
+            <select id="startDate" name="startDate" className={styles.dropDown} required onChange={handleChange}>
+              <option value="">Select a Date</option>
+              {tripDates.map((dateObj, i) => (
+                <option key={i} value={dateObj.date}>{dateObj.date}</option>
               ))}
             </select>
           </div>
 
           <div>
-            <label htmlFor="timeBlock">Set a time</label>
             <select 
             className={styles.dropDown}
-            name="timeBlock"
+            name="timeblock"
             onChange={(e) => {
+              console.log("change timeblock")
               if(e.target.value === 'specific-time'){setSpecificTime(true)};
-              handleChange
+              handleChange(e)
             }}
             >
+              <option value="">Set a time</option>
               <option value="breakfast">Breakfast</option>
               <option value="morning">Morning</option>
               <option value="lunch">Lunch</option>
@@ -93,18 +106,20 @@ export default function ItineraryForm({ handleFormData, tripDates, cancelFunc }:
         <>
         <div className="formRow">
           <div>
-            <label htmlFor="start-day">Start day:</label>
+            <label htmlFor="start-day">Start date:</label>
             <select className={styles.dropDown} name="start-day" required onChange={handleChange}>
-              {tripDates.map(date => (
-                <option value={date}>{date}</option>
+              <option value="">Select a date</option>
+              {tripDates.map(dateObj => (
+                <option key={dateObj.date} value={dateObj.date}>{dateObj.date}</option>
               ))}
             </select>
           </div>
           <div>
-            <label htmlFor="end-day">End day:</label>
+            <label htmlFor="end-day">End date:</label>
             <select className={styles.dropDown} name="end-day" required onChange={handleChange}>
-              {tripDates.map(date => (
-                <option value={date}>{date}</option>
+              <option value="">Select a date</option>
+              {tripDates.map(dateObj => (
+                <option value={dateObj.date}>{dateObj.date}</option>
               ))}
             </select>
           </div>
@@ -116,6 +131,12 @@ export default function ItineraryForm({ handleFormData, tripDates, cancelFunc }:
         <label htmlFor="note">Add a note:</label>
         <textarea className={styles.addNote} maxLength={250} name="note" onChange={handleChange}></textarea>
       </div>
+      
+      {errorMsg ? (
+        <div>
+          <p className="error">{errorMsg}</p>
+        </div>
+      ): null}
 
       <div className={styles.btnCon}>
         <button className={styles.pinkBtn} type="submit">Add to Itenerary</button>

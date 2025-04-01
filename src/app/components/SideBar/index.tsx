@@ -23,7 +23,7 @@ export default function SideBar(props:{ tripId:string }){
 
       <div className={styles.subList}>
         <span className={styles.navLabel}>Itenerary</span>
-        <Link href={props.tripId ? `/trip/${props.tripId}/coming-soon` : ''}  className={styles.navItem}> <MdFormatListBulleted /> List
+        <Link href={props.tripId ? `/trip/${props.tripId}/itinerary` : ''}  className={styles.navItem}> <MdFormatListBulleted /> List
         </Link>
         <Link href={props.tripId ? `/trip/${props.tripId}/coming-soon` : ''}  className={styles.navItem}> <MdOutlineCalendarMonth /> Calendar</Link>
         <Link href={props.tripId ? `/trip/${props.tripId}/coming-soon` : ''}  className={styles.navItem}> <MdOutlineMap /> Map</Link>
