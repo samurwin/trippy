@@ -1,4 +1,4 @@
-import styles from '../../../styles/trip.module.css';
+import styles from './TripHeader.module.css';
 import { MdEdit } from "react-icons/md";
 
 import Link from 'next/link';

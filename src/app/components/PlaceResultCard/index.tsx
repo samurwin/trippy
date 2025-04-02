@@ -1,4 +1,4 @@
-import styles from '../../../styles/trip.module.css'
+import styles from './PlaceResultCard.module.css'
 import { PlaceResultCardProps } from '../../../../types';
 import AddToModal from '../AddToModal';
 
@@ -140,8 +140,8 @@ const [addToBucketList, setAddToBucketList] = useState(false);
         : null}
         {props.explore ? (
           <div className={styles.btnCon}>
-            <button onClick={() => setAddToItinerary(true)} className={styles.pinkBtn}>Add to Itenerary</button>
-            <button onClick={() => setAddToBucketList(true)} className={styles.blueBtn}>Add to Bucket List</button>
+            <button onClick={() => setAddToItinerary(true)} className="pinkBtn">Add to Itenerary</button>
+            <button onClick={() => setAddToBucketList(true)} className="blueBtn">Add to Bucket List</button>
           </div>
         ): null}
 

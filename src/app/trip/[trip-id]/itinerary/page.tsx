@@ -3,12 +3,14 @@ import { Itineraryitem } from "../../../../../types";
 import { useTrip } from "../TripContext";
 import styles from '../../../../styles/trip.module.css'
 import PlaceResultCard from "@/app/components/PlaceResultCard";
+import TripHeader from "@/app/components/TripHeader";
+import { formatDate } from '../../../../utils'
 
 export default function Itinerary(){
   const { trip } = useTrip();
   console.log(trip);
 
-  function formatDate(dateString:string) {
+  function formatItinDate(dateString:string) {
     const date = new Date(dateString);
     const options: Intl.DateTimeFormatOptions = { 
       weekday: "long", 
@@ -20,19 +22,28 @@ export default function Itinerary(){
 
   return (
     <section>
-      <h1>{trip?.tripName}</h1>
-
-      <div
-      className={styles.itineraryHeader}
-      style={{backgroundImage: `url(${trip?.tripPhoto})`}}></div>
+      <TripHeader tripID={trip!.id} tripName={trip!.tripName} tripImg={trip!.tripPhoto} tripDate={formatDate(trip!.startDate, trip!.endDate)} />
 
       <div className={styles.itineraryCon}>
         {trip?.tripDates.map((tripdate, i) => (
           <div key={i}>
-            <h3 className={styles.itineraryDate}>{formatDate(tripdate.date)}</h3>
+            <h3 className={styles.itineraryDate}>{formatItinDate(tripdate.date)}</h3>
+
             {tripdate.itinerary ? tripdate.itinerary.map((itineraryItem, i) => 
-              <div key={i}>
-                {itineraryItem.timeblock ? <p>{itineraryItem.timeblock}</p> : null}
+              <div key={i} className={styles.itineraryitem}>
+                {i > 0 ? 
+                  <div className={styles.divider}></div>
+                : null}
+                {itineraryItem.timeblock ? 
+                  <p className={styles.timeblock}>
+                  {itineraryItem.timeblock === 'specific-time' ? 
+                    <>{itineraryItem.startTime} - {itineraryItem.endTime}</>
+                  :
+                    (itineraryItem.timeblock)
+                  }
+                  </p>
+                  
+                   : null}
                 <PlaceResultCard 
                 displayName={itineraryItem.place.displayName} 
                 primaryType={itineraryItem.place.primaryType}
@@ -52,13 +63,11 @@ export default function Itinerary(){
                     </div>
                   ))
                 ): null}
-
               </div>
             ): null}
           </div>
         ))}
       </div>
-
     </section>
   )
 }

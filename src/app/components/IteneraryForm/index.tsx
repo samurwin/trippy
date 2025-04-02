@@ -77,13 +77,13 @@ export default function ItineraryForm({ handleFormData, tripDates, cancelFunc }:
             }}
             >
               <option value="">Set a time</option>
-              <option value="breakfast">Breakfast</option>
-              <option value="morning">Morning</option>
-              <option value="lunch">Lunch</option>
-              <option value="afternoon">Afternoon</option>
-              <option value="dinner">Dinner</option>
-              <option value="evening">Evening</option>
-              <option value="all-day">All Day</option>
+              <option value="Breakfast">Breakfast</option>
+              <option value="Morning">Morning</option>
+              <option value="Lunch">Lunch</option>
+              <option value="Afternoon">Afternoon</option>
+              <option value="Dinner">Dinner</option>
+              <option value="Evening">Evening</option>
+              <option value="All Day">All Day</option>
               <option value="specific-time">Specific Time</option>
             </select>
           </div>
@@ -139,7 +139,7 @@ export default function ItineraryForm({ handleFormData, tripDates, cancelFunc }:
       ): null}
 
       <div className={styles.btnCon}>
-        <button className={styles.pinkBtn} type="submit">Add to Itenerary</button>
+        <button className="pinkBtn" type="submit">Add to Itenerary</button>
         <button className={styles.cancelBtn} onClick={cancelFunc}>Cancel</button>
       </div>
       

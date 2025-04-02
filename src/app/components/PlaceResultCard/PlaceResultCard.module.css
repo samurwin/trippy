@@ -1,0 +1,95 @@
+/* Place Result Card */
+.placeResultCard, .openPlaceResult{
+  background: var(--white);
+  border-radius: 5px;
+  padding: 24px;
+  display:flex;
+  align-items: center;
+  gap: 10px;
+}
+.openPlaceResult{
+  flex-direction: column;
+  align-items: flex-start;
+}
+.placeResultInfo{
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.openPlaceResult > .placeResultInfo{
+  width: 100%;
+}
+.placeName{
+  font-weight: 600;
+}
+.placeType{
+  background: var(--grey-one);
+  font-size: 12px;
+  width: fit-content;
+  padding: 10px 8px;
+  border-radius: 10px;
+  line-height: 0;
+}
+.placeMetaData{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.priceLevel, .hours {
+  color: var(--grey-two);
+  font-size: 12px;
+  font-weight: 500;
+}
+.address{
+  font-size: 12px;
+}
+.rating{
+  color: #FFD445;
+  text-wrap: nowrap;
+}
+.photosCon{
+  width: 30%;
+  max-width: 500px;
+}
+.placeResultImg{
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  background-size: cover;
+  background-position: center;
+  border-radius: 5px;
+}
+.moreBtn{
+  background: transparent;
+  border: none;
+  color: var(--grey-two);
+  text-decoration: underline;
+  text-align: left;
+  padding: 0;
+}
+.btnCon, .flexCon{
+  display:flex;
+  gap: 16px;
+}
+.btnCon button{
+  font-size: 14px;
+  padding: 4px 10px;
+}
+.placeLink{
+  font-size: 14px;
+}
+.placeLink b {
+  font-weight: 700;
+}
+.placeLink a {
+  color: var(--blue);
+}
+.row{
+  display:flex;
+  gap: 10px;
+  width: 100%;
+}
+.single{
+  width:30%;
+}

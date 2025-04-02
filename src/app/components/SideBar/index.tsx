@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import styles from '../../../styles/trip.module.css'
+import styles from './SideBar.module.css'
 // Icons
 import { MdOutlineExplore, MdFormatListBulleted, MdOutlineCalendarMonth, MdOutlineMap, MdOutlineStar } from "react-icons/md";
 import { FaPlus } from "react-icons/fa6";

@@ -1,32 +1,3 @@
-/* BUTTONS */
-.pinkBtn{
-  background: linear-gradient(90deg, var(--pink), var(--darkPink));
-  border: none;
-  padding: 8px 16px;
-  color: #fff;
-  transition: all 0.2s ease-in-out;
-  border-radius: 5px;
-}
-.purpleBtn{
-  background: linear-gradient(90deg, var(--purple), var(--darkPurple));
-  border: none;
-  padding: 8px 16px;
-  color: #fff;
-  transition: all 0.2s ease-in-out;
-  border-radius: 5px;
-}
-.blueBtn{
-  background: linear-gradient(90deg, var(--blue), var(--darkBlue));
-  padding: 8px 16px;
-  color: #fff;
-  border: none;
-  border-radius: 5px; 
-  transition: all 0.2s ease-in-out;
-}
-
-.blueBtn:hover, .purpleBtn:hover, .pinkBtn:hover{
-  opacity: 0.8;
-}
 
 /* Layout */
 .tripLayoutCon{
@@ -56,102 +27,6 @@
 .tripContent::-webkit-scrollbar-thumb{
   background: var(--grey-one);
   border-radius: 20px;
-}
-/* Side Bar */
-.sideBar{
-  padding: 24px 16px 16px 16px;
-  border-right: solid 1px var(--grey-one);
-  display:flex;
-  flex-direction: column;
-  gap: 48px;
-  width: fit-content;
-}
-.subList{
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.navLabel{
-  font-size: 14px;
-  font-weight: bold;
-  color: var(--grey-two);
-}
-.navItem{
-  display: block;
-  text-decoration: none;
-  font-weight: medium;
-  font-size: 16px;
-  color: var(--dark);
-  margin-left: 8px;
-  text-wrap: nowrap;
-}
-
-.navItem svg {
-  vertical-align: middle;
-  margin: 0 4px 4px 0;
-}
-
-.addBucketListBtn{
-  text-wrap: nowrap;
-  color: var(--dark);
-  opacity: 0.5;
-}
-
-/* Trip Header */
-.tripHeaderCon{
-  display: flex;
-  align-items: flex-end;
-  background-size: cover;
-  background-position: center;
-  height: 25vh;
-  min-height: 150px;
-  padding: 0 16px;
-  border-radius: 10px;
-  margin-bottom: 24px;
-  position: relative;
-}
-.tripHeaderText{
-  background: var(--white);
-  padding: 8px 16px;
-  border-radius: 5px;
-  width: fit-content;
-  box-shadow: 2px 2px 4px rgba(0,0,0,0.25);
-  margin-bottom: -10px;
-}
-.tripHeaderText h1{
-  width: fit-content;
-  font-size: 24px;
-  line-height: 32px;
-}
-.tripDate{
-  margin-top: 4px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--grey-two);
-}
-.headerEditBtn{
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  opacity: 0.5;
-  background: var(--light);
-  padding: 8px;
-  border-radius: 50px;
-  aspect-ratio: 1/1;
-  cursor: pointer;
-  transition: opacity 0.2 ease-in-out;
-}
-.headerEditBtn:hover{
-  opacity: 0.8;
-}
-.editName, .editDate{
-  font-size: 16px;
-  opacity: 0;
-  transition: opacity 0.2 ease-in-out;
-  cursor: pointer;
-}
-.editName:hover, .editDate:hover{
-  opacity: 1;
 }
 
 /* Explore */
@@ -188,7 +63,13 @@
   font-size: 16px;
   border-radius: 5px;
   padding: 16px;
+}
 
+.resultsCon{
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 24px;
 }
 
 /* Trip Details */
@@ -336,100 +217,11 @@
 .cancelBtn:hover, .choosePhotoBtn:hover{
   opacity: 0.8;
 }
-
-/* Place Result Card */
-
-.placeResultCard, .openPlaceResult{
-  margin: 24px 0;
-  background: var(--white);
-  border-radius: 5px;
-  padding: 24px;
-  display:flex;
-  align-items: center;
-  gap: 10px;
-}
-.openPlaceResult{
-  flex-direction: column;
-  align-items: flex-start;
-}
-.placeResultInfo{
+.btnCon{
   display: flex;
-  flex-direction: column;
   gap: 16px;
 }
-.placeName{
-  font-weight: 600;
-}
-.placeType{
-  background: var(--grey-one);
-  font-size: 12px;
-  width: fit-content;
-  padding: 10px 8px;
-  border-radius: 10px;
-  line-height: 0;
-}
-.placeMetaData{
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.priceLevel, .hours {
-  color: var(--grey-two);
-  font-size: 12px;
-  font-weight: 500;
-}
-.address{
-  font-size: 12px;
-}
-.rating{
-  color: #FFD445;
-  text-wrap: nowrap;
-}
-.photosCon{
-  width: 30%;
-  max-width: 500px;
-}
-.placeResultImg{
-  width: 100%;
-  height: 100%;
-  aspect-ratio: 1 / 1;
-  background-size: cover;
-  background-position: center;
-  border-radius: 5px;
-}
-.moreBtn{
-  background: transparent;
-  border: none;
-  color: var(--grey-two);
-  text-decoration: underline;
-  text-align: left;
-  padding: 0;
-}
-.btnCon, .flexCon{
-  display:flex;
-  gap: 16px;
-}
-.btnCon button{
-  font-size: 14px;
-  padding: 4px 10px;
-}
-.placeLink{
-  font-size: 14px;
-}
-.placeLink b {
-  font-weight: 700;
-}
-.placeLink a {
-  color: var(--blue);
-}
-.row{
-  display:flex;
-  gap: 10px;
-  width: 100%;
-}
-.single{
-  width:30%;
-}
+
 /* Add to Modals */
 .subheading{
   font-size: 24px;
@@ -482,9 +274,32 @@
 .itineraryDate{
   font-weight: bold;
   font-size: 18px;
+  margin-bottom: 16px;
+}
+.itineraryitem{
+  display: flex;
+  flex-direction: column;
+  gap:16px;
+}
+.timeblock{
+  background: linear-gradient(90deg, var(--purple), var(--darkPurple));
+  width: fit-content;
+  border-radius: 20px;
+  padding: 4px 8px;
+  color: var(--white);
+  font-weight: 500;
+  font-size: 14px;
+}
+.itineraryItem > p{
+  background: linear-gradient(90deg, var(--blue), var(--darkBlue));
 }
 .noteCon{
   background: var(--white);
   padding: 16px 24px;
   border-radius: 0 30px 30px 30px; 
+}
+.divider{
+  height: 1px;
+  background: var(--grey-one);
+  width: 100%;
 }

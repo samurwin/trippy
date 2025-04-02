@@ -1,0 +1,39 @@
+/* Side Bar */
+.sideBar{
+  padding: 24px 16px 16px 16px;
+  border-right: solid 1px var(--grey-one);
+  display:flex;
+  flex-direction: column;
+  gap: 48px;
+  width: fit-content;
+}
+.subList{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.navLabel{
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--grey-two);
+}
+.navItem{
+  display: block;
+  text-decoration: none;
+  font-weight: medium;
+  font-size: 16px;
+  color: var(--dark);
+  margin-left: 8px;
+  text-wrap: nowrap;
+}
+
+.navItem svg {
+  vertical-align: middle;
+  margin: 0 4px 4px 0;
+}
+
+.addBucketListBtn{
+  text-wrap: nowrap;
+  color: var(--dark);
+  opacity: 0.5;
+}

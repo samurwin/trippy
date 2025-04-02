@@ -115,7 +115,7 @@ export default function Explore(){
 
     {/* Results */}
     {results ? 
-      <section>
+      <section className={styles.resultsCon}>
         {
           results.map((result, i) => (
             <PlaceResultCard 

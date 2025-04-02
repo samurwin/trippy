@@ -149,3 +149,33 @@ input, textarea{
   color: var(--error);
   font-size: 14px;
 }
+
+/* BUTTONS */
+.pinkBtn{
+  background: linear-gradient(90deg, var(--pink), var(--darkPink));
+  border: none;
+  padding: 8px 16px;
+  color: #fff;
+  transition: all 0.2s ease-in-out;
+  border-radius: 5px;
+}
+.purpleBtn{
+  background: linear-gradient(90deg, var(--purple), var(--darkPurple));
+  border: none;
+  padding: 8px 16px;
+  color: #fff;
+  transition: all 0.2s ease-in-out;
+  border-radius: 5px;
+}
+.blueBtn{
+  background: linear-gradient(90deg, var(--blue), var(--darkBlue));
+  padding: 8px 16px;
+  color: #fff;
+  border: none;
+  border-radius: 5px; 
+  transition: all 0.2s ease-in-out;
+}
+
+.blueBtn:hover, .purpleBtn:hover, .pinkBtn:hover{
+  opacity: 0.8;
+}
