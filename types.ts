@@ -40,17 +40,22 @@ export interface ItineraryFormData {
   timeblock?: string,
   startTime?: string,
   endTime?: string,
-  notes?: string[]
+  notes?: Note[]
 }
 
-
 export interface Itineraryitem {
+  id: string,
   length: "single-day" | "multi-day",
   startDate: string,
   endDate?: string,
   timeblock?: string,
   startTime?: string,
   endTime?: string,
-  notes?: string[],
+  notes?: Note[],
   place: PlaceResultCardProps
+}
+
+export type Note = {
+  note: string,
+  id: number
 }

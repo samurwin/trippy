@@ -4,7 +4,7 @@ import { useTrip } from '../TripContext';
 import { useState, useEffect, useRef } from 'react'
 import {useMap, useMapsLibrary} from '@vis.gl/react-google-maps';
 import { tripData } from '../../../../../types';
-import { setCookie } from 'cookies-next';
+import { setCookie, getCookie } from 'cookies-next';
 
 export default function TripInfo(){
   const date = new Date();
@@ -13,7 +13,7 @@ export default function TripInfo(){
   const map = useMap();
 
   // trip info relevant to this page
-  const [tripInfo, setTripInfo] = useState({tripName: trip?.tripName, end: trip?.endDate, start: trip?.startDate, photo: trip?.tripPhoto })
+  const [tripInfo, setTripInfo] = useState({tripName: trip?.tripName || '', end: trip?.endDate || '', start: trip?.startDate || '', photo: trip?.tripPhoto || '' })
 
   // default trip location's google maps photos
   const [locationPhotos, setLocationPhotos] = useState<google.maps.places.PlacePhoto[]>([]);
@@ -37,7 +37,6 @@ export default function TripInfo(){
   function handleChange(e: React.ChangeEvent<HTMLInputElement>){
     e.preventDefault()
     setTripInfo({...tripInfo, [e.target.name]: e.target.value });
-    console.log(tripInfo);
   }
 
   // choose a new trip photo
@@ -57,10 +56,16 @@ export default function TripInfo(){
   }
   // On form submit set updated trip info as new values
   // update the cookie and context to reflect new trip info
-  function saveTripData(e: React.FormEvent<HTMLFormElement>){
+  function saveTripData(e: React.FormEvent<HTMLFormElement>, trip:tripData){
     e.preventDefault();
-    const updatedTrip = { ...trip, tripName: tripInfo.tripName, tripPhoto: tripInfo.photo, startDate: tripInfo.start, endDate: tripInfo.end };
-    
+    console.log('---- GET TRIP ----')
+    const tripCookie = getCookie("tripData");
+    if (tripCookie) {
+      console.log(JSON.parse(tripCookie));
+    }
+    const updatedTrip:tripData = { ...trip, tripName: tripInfo.tripName, tripPhoto: tripInfo.photo, startDate: tripInfo.start, endDate: tripInfo.end };
+    console.log('---- UPDATED TRIP ----')
+    console.log(updatedTrip)
     setTrip(updatedTrip);
     setCookie('tripData', JSON.stringify(updatedTrip),{ maxAge: 60 * 60 * 24, })
     window.alert("Saved Trip Info")
@@ -69,8 +74,9 @@ export default function TripInfo(){
   return (
     <section>
       <h2>Trip Info</h2>
+      {trip ? (
       <div>
-        <form className={styles.tripDetailsForm} onSubmit={saveTripData}>
+        <form className={styles.tripDetailsForm} onSubmit={(e) => saveTripData(e, trip)}>
           <label htmlFor="tripName">Trip Name</label>
           <input name="tripName" className={styles.tripDetailInput} type="text" value={tripInfo.tripName} onChange={handleChange}/>
 
@@ -123,6 +129,8 @@ export default function TripInfo(){
         <button type="submit" className={styles.saveBtn}>Save</button>
         </form>
       </div>
+      ) : "No Trip Found"}
+      
     </section>
   )
 }

@@ -18,7 +18,11 @@ export default function ItineraryForm({ handleFormData, tripDates, cancelFunc }:
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>){
     e.preventDefault();
     if(e.target.name === 'note'){
-      setFormData({...formData, notes: [e.target.value]})
+      let note = {
+        note: e.target.value,
+        id: 0
+      }
+      setFormData({...formData, notes: [note]})
     } else if(e.target.name === 'timeblock'){
       console.log(e.target.value)
       setFormData({ ...formData, [e.target.name]: e.target.value });

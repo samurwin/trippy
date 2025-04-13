@@ -21,6 +21,7 @@ export default function AddToModal({addTo, place, closeModal}:AddToModalProps){
     // add the form data to a IteneraryItem with place:PlaceResultCardProps
     let newItineraryItem:Itineraryitem = {
       ...itineraryFormData,
+      id: self.crypto.randomUUID(),
       place: place
     };
     console.log(newItineraryItem);
@@ -35,12 +36,18 @@ export default function AddToModal({addTo, place, closeModal}:AddToModalProps){
             : dateObj
         )
       }
+      console.log('---- GET TRIP ----')
+      const tripCookie = getCookie("tripData");
+      if (tripCookie) {
+        console.log(JSON.parse(tripCookie));
+      }
   
-      console.log(updatedTrip);
+      console.log('--- updated trip ---')
       setTrip(updatedTrip);
       setCookie('tripData', JSON.stringify(updatedTrip),{ maxAge: 60 * 60 * 24, })
-      const checkCookie = getCookie('tripData')
-      if (checkCookie) console.log(JSON.parse(checkCookie));
+      const newCookie = getCookie('tripData');
+      if(newCookie) console.log(JSON.parse(newCookie));
+      
       handleClose();
       window.alert("Saved itinerary item")
     } else {
