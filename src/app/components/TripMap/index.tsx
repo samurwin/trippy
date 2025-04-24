@@ -1,5 +1,5 @@
 import PoiMarkers from '../PoiMarkers';
-import { useMarkers } from '@/app/trip/[trip-id]/MarkersContext';
+import { useMarkers } from '@/app/trip/[tripId]/MarkersContext';
 import {Map, useMap} from '@vis.gl/react-google-maps';
 const googleMapId = process.env.NEXT_PUBLIC_GOOGLE_MAP_ID
 

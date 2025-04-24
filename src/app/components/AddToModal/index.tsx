@@ -1,8 +1,8 @@
-import { useTrip } from "@/app/trip/[trip-id]/TripContext"
+"use client"
+import { useTrip } from "@/app/trip/[tripId]/TripContext"
 import styles from '../../../styles/trip.module.css'
 import IteneraryForm from "../IteneraryForm";
-import { PlaceResultCardProps, ItineraryFormData, Itineraryitem, tripData } from '../../../../types'
-import { setCookie, getCookie } from 'cookies-next';
+import { PlaceResultCardProps, ItineraryFormData } from '../../../../types'
 
 interface AddToModalProps {
   addTo: 'itinerary' | 'bucket-list';
@@ -11,7 +11,7 @@ interface AddToModalProps {
 }
 
 export default function AddToModal({addTo, place, closeModal}:AddToModalProps){
-  const { trip, setTrip } = useTrip();
+  const { trip } = useTrip();
 
   function handleClose(){
     closeModal(false);
@@ -19,41 +19,11 @@ export default function AddToModal({addTo, place, closeModal}:AddToModalProps){
   // get the itenerary form data back
   function addItemToItinerary(itineraryFormData:ItineraryFormData){
     // add the form data to a IteneraryItem with place:PlaceResultCardProps
-    let newItineraryItem:Itineraryitem = {
+    return {
       ...itineraryFormData,
-      id: self.crypto.randomUUID(),
+      id: crypto.randomUUID(),
       place: place
     };
-    console.log(newItineraryItem);
-    
-    // add to trip and save to cookie
-    if(trip){
-      let updatedTrip:tripData = {
-        ...trip,
-        tripDates: trip.tripDates.map(dateObj => 
-          dateObj.date === newItineraryItem.startDate 
-            ? { ...dateObj, itinerary: dateObj.itinerary ? [...dateObj.itinerary, newItineraryItem] : [newItineraryItem] }
-            : dateObj
-        )
-      }
-      console.log('---- GET TRIP ----')
-      const tripCookie = getCookie("tripData");
-      if (tripCookie) {
-        console.log(JSON.parse(tripCookie));
-      }
-  
-      console.log('--- updated trip ---')
-      setTrip(updatedTrip);
-      setCookie('tripData', JSON.stringify(updatedTrip),{ maxAge: 60 * 60 * 24, })
-      const newCookie = getCookie('tripData');
-      if(newCookie) console.log(JSON.parse(newCookie));
-      
-      handleClose();
-      window.alert("Saved itinerary item")
-    } else {
-      throw new Error('Error loading trip data')
-    }
- 
   }
 
   return (

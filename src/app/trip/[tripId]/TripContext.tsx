@@ -1,7 +1,7 @@
 "use-client"
 import { createContext, useContext } from "react";
 
-import { tripData } from '../.././../../types';
+import { tripData } from '../../../../types';
 
 type TripContextType = {
   trip: tripData | null;

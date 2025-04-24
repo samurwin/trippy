@@ -24,6 +24,21 @@
 .noteCon:focus{
   outline: 1px solid var(--blue);
 }
+.noteWrapper{
+  position:relative;
+}
+.noteWrapper svg{
+position: absolute;
+right: 24px;
+top: 16px;
+cursor: pointer;
+color: var(--error);
+opacity: 0;
+transition: all 0.2 ease-in-out;
+}
+.noteWrapper:hover svg{
+  opacity: 1;
+}
 .divider{
   height: 1px;
   background: var(--grey-one);
@@ -50,4 +65,18 @@
 .editItin{
   background: var(--grey-one);
   color: var(--dark);
+}
+.addNoteBtn{
+  display: flex;
+  background: none;
+  border: none;
+  display: block;
+  text-align: left;
+  padding-left: 24px;
+  text-decoration: underline;
+  color: var(--blue);
+  width: fit-content;
+}
+.addNoteBtn svg{
+  margin-right: 8px;
 }

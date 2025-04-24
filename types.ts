@@ -57,5 +57,5 @@ export interface Itineraryitem {
 
 export type Note = {
   note: string,
-  id: number
+  id: string
 }

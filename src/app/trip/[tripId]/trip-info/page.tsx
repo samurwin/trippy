@@ -4,7 +4,6 @@ import { useTrip } from '../TripContext';
 import { useState, useEffect, useRef } from 'react'
 import {useMap, useMapsLibrary} from '@vis.gl/react-google-maps';
 import { tripData } from '../../../../../types';
-import { setCookie, getCookie } from 'cookies-next';
 
 export default function TripInfo(){
   const date = new Date();
@@ -58,16 +57,10 @@ export default function TripInfo(){
   // update the cookie and context to reflect new trip info
   function saveTripData(e: React.FormEvent<HTMLFormElement>, trip:tripData){
     e.preventDefault();
-    console.log('---- GET TRIP ----')
-    const tripCookie = getCookie("tripData");
-    if (tripCookie) {
-      console.log(JSON.parse(tripCookie));
-    }
+    
     const updatedTrip:tripData = { ...trip, tripName: tripInfo.tripName, tripPhoto: tripInfo.photo, startDate: tripInfo.start, endDate: tripInfo.end };
     console.log('---- UPDATED TRIP ----')
-    console.log(updatedTrip)
     setTrip(updatedTrip);
-    setCookie('tripData', JSON.stringify(updatedTrip),{ maxAge: 60 * 60 * 24, })
     window.alert("Saved Trip Info")
   }
 

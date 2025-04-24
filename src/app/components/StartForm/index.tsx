@@ -1,5 +1,5 @@
 "use client"
-import { MarkersProvider } from "@/app/trip/[trip-id]/MarkersContext";
+import { MarkersProvider } from "@/app/trip/[tripId]/MarkersContext";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from 'next/navigation'
 import { setCookie } from 'cookies-next';
@@ -95,7 +95,10 @@ const  StartFormInner = () => {
       }
     }
     console.log(tripData);
-    setCookie('tripData', JSON.stringify(tripData),{ maxAge: 60 * 60 * 24, })
+    setCookie(`tripData-${tripData.id}`, JSON.stringify(tripData),{ 
+      maxAge: 60 * 60 * 24,
+      path: `/`
+     })
 
     router.push(`/trip/${tripData.id}/explore`)
   }

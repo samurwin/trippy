@@ -1,14 +1,20 @@
+'use client'
+import { useTrip } from "@/app/trip/[tripId]/TripContext"
+import { setCookie } from 'cookies-next'
 import { useState } from 'react'
 import styles from '../../../styles/trip.module.css'
-import { ItineraryFormData, TripDate } from '../../../../types'
+import { ItineraryFormData, TripDate, tripData, Itineraryitem } from '../../../../types'
+
 
 interface ItineraryFormProps {
-  handleFormData: (iteneraryFormData: ItineraryFormData) => void,
+  handleFormData: (iteneraryFormData: ItineraryFormData) => Itineraryitem,
   tripDates: TripDate[],
   cancelFunc: () => void
 }
 
 export default function ItineraryForm({ handleFormData, tripDates, cancelFunc }:ItineraryFormProps){
+  const { trip, setTrip } = useTrip();
+
   const [activityLength, setActivityLength] = useState('single-day')
   const [specificTime, setSpecificTime] = useState(false);
   const [formData, setFormData] = useState<ItineraryFormData>({length: 'single-day', startDate: ''})
@@ -18,9 +24,17 @@ export default function ItineraryForm({ handleFormData, tripDates, cancelFunc }:
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>){
     e.preventDefault();
     if(e.target.name === 'note'){
-      let note = {
-        note: e.target.value,
-        id: 0
+      let note;
+      if(formData.notes?.length){
+        note = {
+          note: e.target.value,
+          id: formData.notes[0].id
+        }
+      } else {
+        note = {
+          note: e.target.value,
+          id: crypto.randomUUID()
+        }
       }
       setFormData({...formData, notes: [note]})
     } else if(e.target.name === 'timeblock'){
@@ -32,18 +46,40 @@ export default function ItineraryForm({ handleFormData, tripDates, cancelFunc }:
   }
   
   // submit form - add to itenerary
-  function addToItenerary(e: React.FormEvent<HTMLFormElement>){
+  function addToItenerary(e: React.FormEvent<HTMLFormElement>, trip: tripData | null){
     e.preventDefault();
     console.log(formData);
     if(!formData.startDate){
       setErrorMsg("Select a date to add to the itinerary");
       return;
     }
-    handleFormData(formData);
+    const newItinItem:Itineraryitem = handleFormData(formData);
+
+    // add to trip and save to cookie
+    if(trip){
+      let updatedTrip:tripData = {
+        ...trip,
+        tripDates: trip.tripDates.map(dateObj => 
+          dateObj.date === newItinItem.startDate 
+            ? { ...dateObj, itinerary: dateObj.itinerary ? [...dateObj.itinerary, newItinItem] : [newItinItem] }
+            : dateObj
+        )
+      }
+  
+      console.log('--- updated trip ---')
+      setTrip(updatedTrip);
+
+      setTimeout(() => {
+        cancelFunc();
+        window.alert("Saved itinerary item");
+      }, 100);
+    } else {
+      throw new Error('Error loading trip data')
+    }
   }
 
   return (
-    <form className={styles.addToForm} onSubmit={addToItenerary}>
+    <form className={styles.addToForm} onSubmit={(e) =>addToItenerary(e, trip)}>
       <div className={styles.inputCon}>
       <select  
        className={styles.dropDown}

@@ -4,45 +4,45 @@ import PlaceResultCard from "../PlaceResultCard";
 import { Itineraryitem, Note } from "../../../../types";
 import { MdDelete, MdEdit } from "react-icons/md";
 import styles from './ItineraryItem.module.css'
-import { useTrip } from "@/app/trip/[trip-id]/TripContext";
-import { setCookie, getCookie } from 'cookies-next';
-
+import { useTrip } from "@/app/trip/[tripId]/TripContext";
+import { FaPlus } from "react-icons/fa6";
 
 interface ItineraryItemProps {
   itineraryItem: Itineraryitem,
-  i: number
+  i: number,
+  id: string
 }
 
-export default function ItineraryItem({itineraryItem, i}:ItineraryItemProps){
+export default function ItineraryItem({itineraryItem, i, id}:ItineraryItemProps){
   const { trip, setTrip } = useTrip(); 
-  const cookie = getCookie("tripData")
-  console.log('--cookie--');
-  console.log(cookie ? JSON.parse(cookie) : 'no cookie');
 
-  function updateItineraryItem(updatedItem:Itineraryitem){
-    console.log(updatedItem)
+  const [itineraryItemState, setItineraryItemState] = useState<Itineraryitem>(itineraryItem)
+
+  useEffect(()=>{
     if(trip){
       const updatedTrip = {
         ...trip,
         tripDates: trip.tripDates.map((dateObj) =>{
-          if(dateObj.date === updatedItem.startDate){
+          if(dateObj.date === itineraryItemState.startDate){
             return {
               ...dateObj,
               itinerary: dateObj.itinerary?.map(item =>
-                item.id === updatedItem.id ? updatedItem : item
+                item.id === itineraryItemState.id ? itineraryItemState : item
               )
             };
           }
           return dateObj;
         })
       }
-      console.log(updatedTrip);
       setTrip(updatedTrip);
-      setCookie("tripData", JSON.stringify(updatedTrip), { maxAge: 60 * 60 * 24, })
+      setTimeout(()=>{
+        console.log(trip)
+      }, 10000)
     } else{
       console.log('no trip');
     }
-  }
+  }, [itineraryItemState])
+
   
   function editItineraryItem(){
 
@@ -52,9 +52,9 @@ export default function ItineraryItem({itineraryItem, i}:ItineraryItemProps){
 
   }
 
-  const [notesArr, setNotes] = useState<Note[] | undefined>(itineraryItem.notes);
+  const [notesArr, setNotes] = useState<Note[] | []>(itineraryItem.notes || []);
 
-  function editNote(e: React.ChangeEvent<HTMLInputElement>, id:number){
+  function editNote(e: React.ChangeEvent<HTMLInputElement>, id:string){
     e.preventDefault();
     if(notesArr && notesArr.length > 0){
       setNotes(prevNotes =>
@@ -65,16 +65,43 @@ export default function ItineraryItem({itineraryItem, i}:ItineraryItemProps){
   }
 
   function addNote(){
-
+    const newNoteObj:Note = {id: crypto.randomUUID(), note: '' }
+    setNotes([ ...notesArr, newNoteObj ]);
+    setTimeout(() => {
+      if(document){
+        const newNoteEl = document.getElementById(newNoteObj.id)
+        if(newNoteEl){
+          console.log('here')
+          newNoteEl.focus();
+        }
+      }
+      setItineraryItemState({
+        ...itineraryItemState,
+        notes: notesArr
+      })
+    }, 100)
   }
 
+  // delete note from notesArr state and update the intinerary item state
+  function deleteNote(e: React.MouseEvent<SVGElement, MouseEvent>, id: string){
+    e.preventDefault();
+    setNotes(
+      notesArr.filter(note => note.id !== id)
+    )
+    setItineraryItemState({
+      ...itineraryItemState,
+      notes: notesArr
+    })
+  }
+
+// on blur of note field, update itinerary item state
 function noteOnBlur(e: React.FocusEvent<HTMLInputElement>){
   e.preventDefault();
-    const updatedItineraryItem = {
-      ...itineraryItem,
-      notes: notesArr
-    }
-  updateItineraryItem(updatedItineraryItem)
+
+  setItineraryItemState({
+    ...itineraryItemState,
+    notes: notesArr
+  })
 }
 
   return (
@@ -116,9 +143,13 @@ function noteOnBlur(e: React.FocusEvent<HTMLInputElement>){
       />
       {notesArr ? (
         notesArr.map((noteObj) => (
-          <input type="text" key={noteObj.id} className={styles.noteCon} value={noteObj.note} onChange={(e) => editNote(e, noteObj.id)} onBlur={noteOnBlur}/>
+          <div className={styles.noteWrapper} key={noteObj.id} >
+          <input type="text"id={noteObj.id} className={styles.noteCon} value={noteObj.note} onChange={(e) => editNote(e, noteObj.id)} onBlur={noteOnBlur}></input>
+          <MdDelete onClick={(e) => deleteNote(e, noteObj.id)}/>
+          </div>
         ))
       ): null}
+      <button className={styles.addNoteBtn} onClick={addNote}><FaPlus/>Add Note</button>
     </div>
   )
 }

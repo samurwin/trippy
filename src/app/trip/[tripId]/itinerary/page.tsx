@@ -2,10 +2,8 @@
 import ItineraryItem from "@/app/components/ItineraryItem";
 import { useTrip } from "../TripContext";
 import styles from '../../../../styles/trip.module.css'
-import PlaceResultCard from "@/app/components/PlaceResultCard";
 import TripHeader from "@/app/components/TripHeader";
 import { formatDate } from '../../../../utils'
-import { MdDelete, MdEdit } from "react-icons/md";
 
 
 export default function Itinerary(){
@@ -31,7 +29,7 @@ export default function Itinerary(){
             <h3 className={styles.itineraryDate}>{formatItinDate(tripdate.date)}</h3>
 
             {tripdate.itinerary ? tripdate.itinerary.map((itineraryItem, i) => 
-              <ItineraryItem key={itineraryItem.id} itineraryItem={itineraryItem} i={i}/>
+              <ItineraryItem key={itineraryItem.id} itineraryItem={itineraryItem} i={i} id={itineraryItem.id}/>
             ): null}
           </div>
         ))}

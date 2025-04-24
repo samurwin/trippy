@@ -5,25 +5,37 @@ import TripMap from '../../components/TripMap'
 import Header from '../../components/Header';
 import SideBar from '../../components/SideBar'
 import styles from '../../../styles/trip.module.css'
-import { useState } from 'react'
-import { tripData, Poi } from '../../../../types'
+import { useState, useEffect } from 'react'
+import { useParams } from 'next/navigation'
+import { tripData } from '../../../../types'
 
-import { getCookie } from 'cookies-next';
+import { getCookie, setCookie } from 'cookies-next';
 import { APIProvider } from '@vis.gl/react-google-maps';
 
 const googleApiKey : any = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
 
-export default function TripLayout({ children }: Readonly<{  children: React.ReactNode; }>){
+export default function TripLayout({ children }: {  children: React.ReactNode,  }){
+  const {tripId} = useParams()
 
-   const [trip, setTrip] = useState<tripData | null>(() => {
-    // Load trip from cookie on initial render
-    if (typeof window !== "undefined") {
-      const tripCookie = getCookie("tripData");
-      return tripCookie ? JSON.parse(tripCookie) : null
-    }
-    return null;
-  })
+  const cookie = getCookie(`tripData-${tripId}`);
+  const parsedCookie = cookie ? JSON.parse(cookie as string) : null;
+   const [trip, setTrip] = useState<tripData | null>(parsedCookie || null)
   const value = {trip, setTrip};
+
+  useEffect(() => {
+    if (!setCookie) console.log('set cookie not here')
+    if (trip && trip.id) {
+      // console.log('trip state')
+      // console.log(trip);
+      setCookie(`tripData-${trip.id}`, JSON.stringify(trip), {
+        maxAge: 60 * 60 * 24,
+        path: `/`, 
+      });
+      // console.log(`Cookie Updated: tripData-${trip.id}`);
+      // const newCookie = getCookie(`tripData-${trip.id}`);
+      // console.log(newCookie ?  JSON.parse(cookie as string) : null)
+    }
+  }, [trip, setCookie, getCookie]);
 
   return (
     <APIProvider apiKey={googleApiKey} onLoad={() => console.log('Maps API has loaded.')}>
