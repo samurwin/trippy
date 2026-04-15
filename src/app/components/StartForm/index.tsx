@@ -3,7 +3,7 @@ import { MarkersProvider } from "@/app/trip/[tripId]/MarkersContext";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from 'next/navigation'
 import { setCookie } from 'cookies-next';
-import { APIProvider, Map, useMapsLibrary, useMap } from "@vis.gl/react-google-maps";
+import { APIProvider, useMapsLibrary, useMap } from "@vis.gl/react-google-maps";
 
 import TripMap from "../TripMap"
 import styles from "../../../styles/page.module.css"

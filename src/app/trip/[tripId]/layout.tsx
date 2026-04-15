@@ -25,17 +25,17 @@ export default function TripLayout({ children }: {  children: React.ReactNode,  
   useEffect(() => {
     if (!setCookie) console.log('set cookie not here')
     if (trip && trip.id) {
-      // console.log('trip state')
-      // console.log(trip);
+      console.log('trip state')
+      console.log(trip);
       setCookie(`tripData-${trip.id}`, JSON.stringify(trip), {
         maxAge: 60 * 60 * 24,
         path: `/`, 
       });
-      // console.log(`Cookie Updated: tripData-${trip.id}`);
-      // const newCookie = getCookie(`tripData-${trip.id}`);
-      // console.log(newCookie ?  JSON.parse(cookie as string) : null)
+      console.log(`Cookie Updated: tripData-${trip.id}`);
+      const newCookie = getCookie(`tripData-${trip.id}`);
+      console.log(newCookie ?  JSON.parse(cookie as string) : null)
     }
-  }, [trip, setCookie, getCookie]);
+  }, [trip]);
 
   return (
     <APIProvider apiKey={googleApiKey} onLoad={() => console.log('Maps API has loaded.')}>

@@ -11,10 +11,12 @@ export default function Itinerary(){
 
   function formatItinDate(dateString:string) {
     const date = new Date(dateString);
+
     const options: Intl.DateTimeFormatOptions = { 
       weekday: "long", 
       day: "numeric", 
-      month: "long" 
+      month: "long",
+      timeZone: 'UTC' 
   };
     return date.toLocaleDateString("en-US", options);
 }

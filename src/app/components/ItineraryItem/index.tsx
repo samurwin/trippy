@@ -6,6 +6,7 @@ import { MdDelete, MdEdit } from "react-icons/md";
 import styles from './ItineraryItem.module.css'
 import { useTrip } from "@/app/trip/[tripId]/TripContext";
 import { FaPlus } from "react-icons/fa6";
+import AddToModal from '../AddToModal';
 
 interface ItineraryItemProps {
   itineraryItem: Itineraryitem,
@@ -19,6 +20,7 @@ export default function ItineraryItem({itineraryItem, i, id}:ItineraryItemProps)
   const [itineraryItemState, setItineraryItemState] = useState<Itineraryitem>(itineraryItem)
 
   useEffect(()=>{
+    if(!itineraryItemState) return;
     if(trip){
       const updatedTrip = {
         ...trip,
@@ -35,21 +37,38 @@ export default function ItineraryItem({itineraryItem, i, id}:ItineraryItemProps)
         })
       }
       setTrip(updatedTrip);
-      setTimeout(()=>{
-        console.log(trip)
-      }, 10000)
     } else{
       console.log('no trip');
     }
   }, [itineraryItemState])
 
-  
-  function editItineraryItem(){
+  const [editItemModal, setEditItemModal] = useState(false)
+ 
 
-  }
-
-  function deleteItineraryItem(){
-
+  function deleteItineraryItem(e: React.MouseEvent<HTMLButtonElement>){
+    e.preventDefault();
+    if(trip){
+      let updatedTrip = {
+        ...trip,
+        tripDates: trip?.tripDates.map(dateObj => {
+          console.log(dateObj)
+          if(dateObj.date === itineraryItemState.startDate){
+            console.log('here')
+            return {
+              ...dateObj,
+              itinerary: dateObj.itinerary?.filter(item => item.id === itineraryItemState.id)
+            }
+          }
+          return dateObj
+        })
+      }
+      console.log("updated trip")
+      console.log(updatedTrip)
+      setTrip(updatedTrip)
+    } else{
+      console.log('no trip')
+    }
+    
   }
 
   const [notesArr, setNotes] = useState<Note[] | []>(itineraryItem.notes || []);
@@ -71,7 +90,6 @@ export default function ItineraryItem({itineraryItem, i, id}:ItineraryItemProps)
       if(document){
         const newNoteEl = document.getElementById(newNoteObj.id)
         if(newNoteEl){
-          console.log('here')
           newNoteEl.focus();
         }
       }
@@ -94,15 +112,15 @@ export default function ItineraryItem({itineraryItem, i, id}:ItineraryItemProps)
     })
   }
 
-// on blur of note field, update itinerary item state
-function noteOnBlur(e: React.FocusEvent<HTMLInputElement>){
+  // on blur of note field, update itinerary item state
+  function noteOnBlur(e: React.FocusEvent<HTMLInputElement>){
   e.preventDefault();
 
   setItineraryItemState({
     ...itineraryItemState,
     notes: notesArr
   })
-}
+  }
 
   return (
     <div className={styles.itineraryitem}>
@@ -110,10 +128,10 @@ function noteOnBlur(e: React.FocusEvent<HTMLInputElement>){
         <div className={styles.divider}></div>
       : null}
       <div className={styles.itinDetails}>
-        {itineraryItem.timeblock ? 
+        {itineraryItemState.timeblock ? 
           <p className={styles.timeblock}>
-          {itineraryItem.timeblock === 'specific-time' ? 
-            <>{itineraryItem.startTime}{itineraryItem.endTime ?  - (itineraryItem.endTime) : null} </>
+          {itineraryItemState.timeblock === 'specific-time' ? 
+            <>{itineraryItemState.startTime}{itineraryItemState.endTime ?  - (itineraryItemState.endTime) : null} </>
           :
             (itineraryItem.timeblock)
           }
@@ -121,25 +139,25 @@ function noteOnBlur(e: React.FocusEvent<HTMLInputElement>){
           : null}
 
           <div className={styles.editBtns}>
-            <button className={styles.editItin}>
+            <button className={styles.editItin} onClick={() => setEditItemModal(true)}>
               <MdEdit />
             </button>
-            <button className={styles.deleteItin}>
+            <button className={styles.deleteItin} onClick={(e) => deleteItineraryItem(e)}>
               <MdDelete/>
             </button>
           </div>
       </div>
       <PlaceResultCard 
-      displayName={itineraryItem.place.displayName} 
-      primaryType={itineraryItem.place.primaryType}
-      priceLevel={itineraryItem.place.priceLevel}
-      rating={itineraryItem.place.rating}
-      regularOpeningHours={itineraryItem.place.regularOpeningHours}
-      photos={itineraryItem.place.photos}
+      displayName={itineraryItemState.place.displayName} 
+      primaryType={itineraryItemState.place.primaryType}
+      priceLevel={itineraryItemState.place.priceLevel}
+      rating={itineraryItemState.place.rating}
+      regularOpeningHours={itineraryItemState.place.regularOpeningHours}
+      photos={itineraryItemState.place.photos}
       formattedAddress={itineraryItem.place.formattedAddress}
-      formattedPhone={itineraryItem.place.formattedPhone}
-      website={itineraryItem.place.website}
-      summary={itineraryItem.place.summary}
+      formattedPhone={itineraryItemState.place.formattedPhone}
+      website={itineraryItemState.place.website}
+      summary={itineraryItemState.place.summary}
       />
       {notesArr ? (
         notesArr.map((noteObj) => (
@@ -150,6 +168,11 @@ function noteOnBlur(e: React.FocusEvent<HTMLInputElement>){
         ))
       ): null}
       <button className={styles.addNoteBtn} onClick={addNote}><FaPlus/>Add Note</button>
+
+      {editItemModal ? (
+        <AddToModal addTo={'itinerary'} place={itineraryItem.place} closeModal={setEditItemModal} itinItemToEdit={itineraryItemState} />
+      ):''}
+
     </div>
   )
 }
